@@ -1,0 +1,115 @@
+:root {
+  --primary: rgb(190, 136, 37);
+  --secondary: rgb(192, 118, 118);
+  --dark: rgb(95, 34, 34);
+  --light: rgb(239, 241, 243);
+  --complimentary: rgb(184, 116, 96);
+}
+* {
+  padding: 0px;
+  margin: 0px;
+  scroll-behavior: smooth;
+}
+body {
+  background-color: black;
+}
+
+.backgroundImage {
+  position: fixed;
+  bottom: -100px;
+  width: 100%;
+  height: 1000px;
+  background-image: url(./img/smoke\ background.jpg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  z-index: -2;
+  opacity: 0.2;
+}
+
+h1 {
+  text-align: center;
+  font-size: 8rem;
+  color: white;
+  font-family: "MedievalSharp", cursive;
+}
+.shrink-h1 {
+  font-size: 3rem;
+  padding-top: 30px;
+  transition: all 1s ease-in-out;
+  color: rgb(255, 255, 255, 0.6);
+}
+.header {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  position: relative;
+  height: 90vh;
+  padding-bottom: 5rem;
+  transition: all 1s ease-in-out;
+  background-image: url(./img/background.jpg);
+}
+
+.shrink-header {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  position: relative;
+  height: 6vh;
+  transition: all 1s ease-in-out;
+  background-image: url(./img/background.jpg);
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#battleground {
+  margin: auto;
+  width: 900px;
+  block-size: fit-content;
+  height: 700px;
+  background-image: url(./img/battleground.jpg);
+  background-size: 60%;
+  border: solid 10px black;
+  z-index: -1;
+}
+
+.button {
+  box-sizing: border-box;
+  padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: var(--dark);
+  color: var(--light);
+  font-family: "Montserrat", sans-serif;
+  border: none;
+  margin-left: 30px;
+  margin-right: 30px;
+  font-size: 20px;
+  border-radius: 100px;
+  margin-top: 5px;
+  transition: all ease-out 0.7s;
+}
+.button:hover {
+  box-sizing: border-box;
+  background-color: rgba(190, 37, 45, 0.5);
+  cursor: pointer;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+#active {
+  display: none;
+}
+
+.playerImg {
+  height: 60px;
+  width: 40px;
+  z-index: 1;
+}
