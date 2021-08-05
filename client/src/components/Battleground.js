@@ -4,6 +4,8 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER, ADD_USER } from "../utils/mutations";
 
 export default function Battleground() {
+  const loggedIn = Auth.loggedIn();
+  console.log(loggedIn);
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login] = useMutation(LOGIN_USER);
   const [addUser] = useMutation(ADD_USER);
@@ -75,8 +77,15 @@ export default function Battleground() {
     }
   };
 
+  function logout() {
+    Auth.logout();
+  }
+
   return (
     <>
+      <div className={Auth.loggedIn() ? "profile" : "hidden"}>
+        <button className="button">Profile</button>
+      </div>
       <div className={Auth.loggedIn() ? "hidden" : "login-container"}>
         <form onSubmit={handleFormSubmit}>
           <input
@@ -110,6 +119,11 @@ export default function Battleground() {
             {loginOrSignupButton}
           </button>
         </p>
+      </div>
+      <div className={Auth.loggedIn() ? "logout" : "hidden"}>
+        <button className="button" onClick={logout}>
+          Logout
+        </button>
       </div>
 
       <div id="battleground"></div>
