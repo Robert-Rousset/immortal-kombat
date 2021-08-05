@@ -13,7 +13,7 @@ function Header({ currentPage, handlePageChange }) {
             className="button"
             id={currentPage === "PlayGame" ? "active" : ""}
           >
-            Play Game
+            Enter The Battle
           </button>
         </a>
       </header>
