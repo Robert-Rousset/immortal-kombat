@@ -1,7 +1,7 @@
 :root {
   --primary: rgb(190, 136, 37);
   --secondary: rgb(192, 118, 118);
-  --dark: rgb(95, 34, 34);
+  --dark: rgb(85, 24, 24);
   --light: rgb(239, 241, 243);
   --complimentary: rgb(184, 116, 96);
 }
@@ -20,14 +20,14 @@ p {
 
 .backgroundImage {
   position: fixed;
-  bottom: -100px;
+  bottom: -500px;
   width: 100%;
   height: 1000px;
-  background-image: url(./img/smoke\ background.jpg);
+  background-image: url(./img/smoke.jpg);
   background-size: 100%;
   background-repeat: no-repeat;
   z-index: -2;
-  opacity: 0.2;
+  opacity: 0.4;
 }
 
 h1 {
@@ -38,9 +38,10 @@ h1 {
 }
 .shrink-h1 {
   font-size: 3rem;
-  padding-top: 30px;
+  padding-top: 20px;
   transition: all 1s ease-in-out;
-  color: rgb(255, 255, 255, 0.6);
+  color: rgba(214, 214, 214);
+  z-index: 4;
 }
 .header {
   flex-direction: column;
@@ -62,7 +63,7 @@ h1 {
   justify-content: center;
   margin: auto;
   position: relative;
-  height: 6vh;
+  height: 8vh;
   transition: all 1s ease-in-out;
   background-image: url(./img/background.jpg);
 }
@@ -79,8 +80,12 @@ h1 {
   height: 700px;
   background-image: url(./img/battleground.jpg);
   background-size: 60%;
-  border: solid 10px black;
-  z-index: -1;
+  border: solid 10px rgba(0, 0, 0);
+  box-shadow: inset 50px 50px 100px rgb(0, 0, 0),
+    inset -50px -50px 100px rgb(0, 0, 0);
+
+  z-index: 3;
+  margin-top: 30px;
 }
 
 .button {
@@ -130,8 +135,16 @@ h1 {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  min-width: 300px;
+  min-width: 350px;
 }
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
 .signup {
   margin-top: 20px;
   background: none;
@@ -146,11 +159,30 @@ h1 {
 }
 input {
   border-radius: 10px;
-  width: 90%;
+  width: 80%;
   margin: 0.5rem;
   background-color: rgb(233, 233, 233);
   padding: 10px;
 }
 input:focus {
   outline: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.logout {
+  position: absolute;
+  bottom: 10px;
+  right: 0px;
+  padding: 5px;
+  z-index: 5;
+}
+.profile {
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  padding: 5px;
+  z-index: 5;
 }
