@@ -26,7 +26,7 @@ p {
   background-image: url(./img/smoke.jpg);
   background-size: 100%;
   background-repeat: no-repeat;
-  z-index: -2;
+  z-index: -5;
   opacity: 0.4;
 }
 
@@ -41,7 +41,7 @@ h1 {
   padding-top: 20px;
   transition: all 1s ease-in-out;
   color: rgba(214, 214, 214);
-  z-index: 4;
+  z-index: 1;
 }
 .header {
   flex-direction: column;
@@ -50,7 +50,7 @@ h1 {
   justify-content: center;
   margin: auto;
   position: relative;
-  height: 90vh;
+  height: 95vh;
   padding-bottom: 5rem;
   transition: all 1s ease-in-out;
   background-image: url(./img/background.jpg);
@@ -84,7 +84,7 @@ h1 {
   box-shadow: inset 50px 50px 100px rgb(0, 0, 0),
     inset -50px -50px 100px rgb(0, 0, 0);
 
-  z-index: 3;
+  z-index: 2;
   margin-top: 30px;
 }
 
@@ -136,6 +136,7 @@ h1 {
   justify-content: center;
   flex-direction: column;
   min-width: 350px;
+  z-index: 100;
 }
 form {
   display: flex;
@@ -174,15 +175,15 @@ input:focus {
 
 .logout {
   position: absolute;
-  bottom: 10px;
+  top: 10px;
   right: 0px;
   padding: 5px;
-  z-index: 5;
+  z-index: 100;
 }
 .profile {
   position: absolute;
-  bottom: 10px;
+  top: 10px;
   left: 0px;
   padding: 5px;
-  z-index: 5;
+  z-index: 100;
 }
