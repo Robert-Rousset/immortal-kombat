@@ -74,27 +74,26 @@ scene("game", (levelIndex) => {
     }
   }
 
-  keyPress("up", () => {});
-
-  function spawnAttack(s) {
+  mouseClick(() => {
+    const warriorLocation = warrior.pos.add(-20, 0);
+    const mpos = mousePos();
     const attack = add([
       sprite("attack", { animSpeed: 0.05, frame: 0 }),
-      pos(s),
+      pos(warrior.pos.add(-20, 0)),
       scale(0.3),
       "attack",
+      {
+        dir: mpos.sub(warriorLocation).unit(),
+      },
     ]);
     attack.play("attack");
     wait(0.4, () => {
       destroy(attack);
     });
-  }
-
-  keyPress("up", () => {
-    spawnAttack(warrior.pos.add(-20, 0));
   });
 
   action("attack", (s) => {
-    s.move(0, -ATTACK_SPEED);
+    s.move(s.dir.scale(ATTACK_SPEED));
   });
 
   warrior.action(() => {
