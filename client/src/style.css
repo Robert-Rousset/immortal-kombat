@@ -50,7 +50,7 @@ h1 {
   justify-content: center;
   margin: auto;
   position: relative;
-  height: 90vh;
+  height: 95vh;
   padding-bottom: 5rem;
   transition: all 1s ease-in-out;
   background-image: url(./img/background.jpg);
@@ -84,7 +84,9 @@ h1 {
   box-shadow: inset 50px 50px 100px rgb(0, 0, 0),
     inset -50px -50px 100px rgb(0, 0, 0);
 
+
   z-index: -1;
+
   margin-top: 30px;
 }
 
@@ -136,6 +138,7 @@ h1 {
   justify-content: center;
   flex-direction: column;
   min-width: 350px;
+  z-index: 100;
 }
 form {
   display: flex;
