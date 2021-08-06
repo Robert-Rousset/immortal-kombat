@@ -14,10 +14,10 @@ scene("game", (levelIndex) => {
   let SPEED = 200;
   layers([("background", "obj", "ui"), "obj"]);
 
-  const background = add([sprite("background"), pos(10), scale(1.5)]);
+  const background = add([sprite("background"), pos(0, -400), scale(2)]);
   const warrior = add([sprite("warrior"), pos(100, 100), scale(0.1)]);
 
-  add([text("0"), pos(0, 0), layer("ui"), { value: "test" }, scale(4)]);
+  add([text("0"), pos(20, 20), layer("ui"), { value: "test" }, scale(4)]);
 
   const dirs = {
     a: vec2(-1, 0),
