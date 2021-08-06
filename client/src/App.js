@@ -9,7 +9,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 
 import Header from "./components/Header";
-import Battleground from "./components/Battleground";
+import Profile from "./components/Profile";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -34,18 +34,25 @@ const client = new ApolloClient({
 
 function App() {
   const [currentPage, setCurrentPage] = useState();
+  const [Class, setClass] = useState("opaque");
 
   const renderPage = () => {
     if (currentPage === "PlayGame") {
+      setTimeout(() => {
+        setClass("center");
+      }, 1000);
       return (
-        <div className="center">
-          <Battleground />
+        <div className={Class}>
+          <Profile />
         </div>
       );
     }
   };
 
-  const handlePageChange = (page) => setCurrentPage(page);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <ApolloProvider client={client}>
