@@ -7,13 +7,17 @@ const k = kaboom({
 });
 
 loadSprite("warrior", "./img/sprites/warrior.png");
-// load only a fragment shader from URL
-loadShader("outline", null, "./img/battleground.jpg", true);
+
+loadSprite("background", "./img/battleground.jpg");
 
 scene("game", (levelIndex) => {
   let SPEED = 200;
+  layers([("background", "obj", "ui"), "obj"]);
 
+  const background = add([sprite("background"), pos(10), scale(1.5)]);
   const warrior = add([sprite("warrior"), pos(100, 100), scale(0.1)]);
+
+  add([text("0"), pos(0, 0), layer("ui"), { value: "test" }, scale(4)]);
 
   const dirs = {
     a: vec2(-1, 0),
@@ -26,11 +30,11 @@ scene("game", (levelIndex) => {
       warrior.move(dirs[dir].scale(SPEED));
     });
   }
-  const dash = {
-    shift: vec2(0, 0),
-  };
-  keyDown(dash, () => {
-    warrior.move(dash.scale(SPEED++));
+  keyPress("shift", () => {
+    SPEED = SPEED * 5;
+    wait(0.08, () => {
+      SPEED = SPEED / 5;
+    });
   });
 
   warrior.action(() => {
