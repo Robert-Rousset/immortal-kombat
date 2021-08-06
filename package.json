@@ -17,6 +17,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "graphql": "^15.5.1"
+    "graphql": "^15.5.1",
+    "kaboom": "^0.5.1"
   }
 }

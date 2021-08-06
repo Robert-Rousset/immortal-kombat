@@ -5,8 +5,6 @@ export default function Battleground() {
   return (
     <>
       <Profile />
-
-      <div id="battleground"></div>
     </>
   );
 }

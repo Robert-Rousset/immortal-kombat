@@ -13,11 +13,13 @@
 body {
   background-color: black;
 }
+.hidden {
+  display: none;
+}
 p {
   font-family: "Roboto", sans-serif;
   color: white;
 }
-
 .backgroundImage {
   position: fixed;
   bottom: -500px;
@@ -30,6 +32,7 @@ p {
   opacity: 0.4;
 }
 
+/* HEADER */
 h1 {
   text-align: center;
   font-size: 8rem;
@@ -55,7 +58,6 @@ h1 {
   transition: all 1s ease-in-out;
   background-image: url(./img/background.jpg);
 }
-
 .shrink-header {
   flex-direction: column;
   display: flex;
@@ -73,6 +75,7 @@ h1 {
   justify-content: center;
 }
 
+/* BATTLEFIELD */
 #battleground {
   margin: auto;
   width: 900px;
@@ -84,12 +87,12 @@ h1 {
   box-shadow: inset 50px 50px 100px rgb(0, 0, 0),
     inset -50px -50px 100px rgb(0, 0, 0);
 
-
   z-index: -1;
 
   margin-top: 30px;
 }
 
+/* BUTTONS */
 .button {
   box-sizing: border-box;
   padding: 5px;
@@ -120,12 +123,7 @@ h1 {
   display: none;
 }
 
-.playerImg {
-  height: 60px;
-  width: 40px;
-  z-index: 1;
-}
-
+/* PROFILE/LOGIN STUFF */
 .login-container {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
@@ -139,6 +137,7 @@ h1 {
   flex-direction: column;
   min-width: 350px;
   z-index: 100;
+  bottom: 300px;
 }
 form {
   display: flex;
@@ -147,7 +146,6 @@ form {
   flex-direction: column;
   width: 100%;
 }
-
 .signup {
   margin-top: 20px;
   background: none;
@@ -170,11 +168,6 @@ input {
 input:focus {
   outline: none;
 }
-
-.hidden {
-  display: none;
-}
-
 .logout {
   position: absolute;
   top: 10px;
@@ -188,4 +181,14 @@ input:focus {
   left: 0px;
   padding: 5px;
   z-index: 100;
+}
+
+/* WARRIOR */
+
+.warriorImg {
+  margin-left: 50px;
+  height: 60px;
+  width: 40px;
+  z-index: 1;
+  transform: translateY(50px);
 }
