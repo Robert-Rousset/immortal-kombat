@@ -7,6 +7,8 @@ const k = kaboom({
 });
 loadSprite("background", "./img/battleground.jpg");
 
+//
+// LOAD WARRIOR SPRITE IN 4 DIRECTIONS
 loadSprite("warriorDown", "./img/sprites/warrior-dude/walking-down.png", {
   sliceX: 4,
   anims: {
@@ -59,6 +61,7 @@ loadSprite("warriorRight", "./img/sprites/warrior-dude/walking-right.png", {
     },
   },
 });
+// WARRIORS ATTACk
 loadSprite("attack", "./img/attack/attackanim.png", {
   sliceX: 4,
   sliceY: 2,
@@ -69,32 +72,22 @@ loadSprite("attack", "./img/attack/attackanim.png", {
     },
   },
 });
+// WARRIORS HEALTH
+loadSprite("health", "./img/health/heart.png", {
+  sliceX: 4,
+  anims: {
+    pump: {
+      from: 0,
+      to: 3,
+    },
+  },
+});
 
-// loadSprite("enemy", "./img/sprites/enemy/enemy1.png", {
-//   sliceX: 9,
-//   anims: {
-//     walk: {
-//       from: 0,
-//       to: 8,
-//     },
-//   },
-// });
-
-// loadSprite("coopa", "./img/sprites/enemy/coopas.png", {
-//   sliceX: 2,
-//   sliceY: 2,
-//   anims: {
-//     coopa1: {
-//       from: 0,
-//       to: 1,
-//     },
-//     coopa2: {
-//       from: 2,
-//       to: 3,
-//     },
-//   },
-// });
-
+//
+//
+//
+//
+//ENEMY SPRITES GOBLIN ARMY
 loadSprite("goblin", "./img/sprites/enemy/goblin-army.png", {
   sliceX: 12,
   sliceY: 8,
@@ -109,13 +102,29 @@ loadSprite("goblin", "./img/sprites/enemy/goblin-army.png", {
 scene("game", (levelIndex) => {
   //SETUP
   origin("center");
+  //
+  //
+  //
+  // WARRIOR STATS
   let ATTACK_SPEED = 250;
   let WARRIOR_SPEED = 200;
   let DASH = 4;
+  let healthpos = width() - 50;
+  let health0 = 0;
+  let WARRIOR_HEALTH = 3;
+  //
+  //
+  //
+  //ENEMY STATS
   let GOBLIN_SPEED = 200;
   let GOBLIN_HEALTH = 1;
   let enemyCount = 0;
   let totalEnemies = 5;
+
+  //
+  //
+  //
+  // LOADING IN UI/ WARRIOR SPRITE
   layers([("background", "obj", "ui"), "obj"]);
   add([text("0"), pos(20, 20), layer("ui"), { value: "test" }, scale(4)]);
   add([
@@ -130,78 +139,33 @@ scene("game", (levelIndex) => {
     pos(width() / 2, height() / 2),
     scale(0.15),
     solid(),
+    {
+      health: WARRIOR_HEALTH,
+    },
   ]);
 
-  function spawnGoblin() {
-    add([
-      sprite("goblin", { animSpeed: 0.5, frame: 0 }),
-      pos(width() / 2, height() / 2),
-      scale(0.5),
-      "goblin",
-      {
-        life: GOBLIN_HEALTH,
-      },
-    ]);
-    if (enemyCount < totalEnemies)
-      wait(1, () => {
-        enemyCount++;
-        spawnGoblin();
-      });
+  function spawnHealth() {
+    if (health0 < WARRIOR_HEALTH) {
+      health0++;
+      healthpos = healthpos - 65;
+      let health = add([
+        sprite("health", { animSpeed: 0.15, frame: 0 }),
+        pos(healthpos, 0),
+        scale(0.2),
+        "health",
+      ]);
+      health.play("pump");
+      spawnHealth();
+    }
   }
+  spawnHealth();
 
-  spawnGoblin();
-
-  action("goblin", (goblin) => {
-    if (warrior.pos.x < goblin.pos.x && warrior.pos.y < goblin.pos.y) {
-      wait(0.2, () => {
-        goblin.move(rand(-GOBLIN_SPEED, 0), rand(0, -GOBLIN_SPEED));
-      });
-    }
-    if (warrior.pos.x > goblin.pos.x && warrior.pos.y > goblin.pos.y) {
-      wait(0.2, () => {
-        goblin.move(rand(GOBLIN_SPEED, 0), rand(0, GOBLIN_SPEED));
-      });
-    }
-    if (warrior.pos.y > goblin.pos.y && warrior.pos.x < goblin.pos.x) {
-      wait(0.2, () => {
-        goblin.move(rand(-GOBLIN_SPEED, 0), rand(0, GOBLIN_SPEED));
-      });
-    }
-    if (warrior.pos.y < goblin.pos.y && warrior.pos.x > goblin.pos.x) {
-      wait(0.2, () => {
-        goblin.move(rand(GOBLIN_SPEED, 0), rand(0, -GOBLIN_SPEED));
-      });
-    }
-  });
-  overlaps("goblin", "attack", (goblin) => {
-    goblin.life--;
-    if (goblin.life <= 0) {
-      destroy(goblin);
-    }
-  });
-  // goblin.action(() => {});
-
-  // goblin.action(() => {
-  //   goblin.move(30, 30);
-  // });
-
-  // const enemy = add([
-  //   sprite("enemy", { animSpeed: 0.5, frame: 0 }),
-  //   pos(300, 300),
-  // ]);
-
-  // const coopa1 = add([
-  //   sprite("coopa", { animSpeed: 0.5, frame: 0 }),
-  //   pos(300, 300),
-  // ]);
-  // const coopa2 = add([
-  //   sprite("coopa", { animSpeed: 0.5, frame: 4 }),
-  //   pos(500, 500),
-  // ]);
-
-  // coopa1.play("coopa1");
-  // coopa2.play("coopa2");
-  // enemy.play("walk");
+  //
+  //
+  //
+  //
+  //
+  //PLAYER ACTIONS//
 
   // LEFT MOVEMENT
   keyPress("a", () => {
@@ -252,6 +216,12 @@ scene("game", (levelIndex) => {
   //   warrior.play("idle");
   // });
 
+  //
+  //
+  //
+  //
+  //WARRIOR DASH
+
   let dashIsNotCooldown = true;
   keyPress("space", () => {
     if (dashIsNotCooldown) {
@@ -275,6 +245,12 @@ scene("game", (levelIndex) => {
       });
     }
   }
+
+  //
+  //
+  //
+  //
+  //WARRIOR ATTACK
 
   mouseClick(() => {
     const warriorLocation = warrior.pos.add(-20, 0);
@@ -301,6 +277,58 @@ scene("game", (levelIndex) => {
   warrior.action(() => {
     warrior.pushOutAll();
   });
+
+  //
+  //
+  //
+  //
+  //ENEMY ACTIONS
+  function spawnGoblin() {
+    add([
+      sprite("goblin", { animSpeed: 0.5, frame: 0 }),
+      pos(width() / 2, height() / 2),
+      scale(0.5),
+      "goblin",
+      {
+        life: GOBLIN_HEALTH,
+      },
+    ]);
+    if (enemyCount < totalEnemies)
+      wait(1, () => {
+        enemyCount++;
+        spawnGoblin();
+      });
+  }
+
+  action("goblin", (goblin) => {
+    if (warrior.pos.x < goblin.pos.x && warrior.pos.y < goblin.pos.y) {
+      wait(0.2, () => {
+        goblin.move(rand(-GOBLIN_SPEED, 0), rand(0, -GOBLIN_SPEED));
+      });
+    }
+    if (warrior.pos.x > goblin.pos.x && warrior.pos.y > goblin.pos.y) {
+      wait(0.2, () => {
+        goblin.move(rand(GOBLIN_SPEED, 0), rand(0, GOBLIN_SPEED));
+      });
+    }
+    if (warrior.pos.y > goblin.pos.y && warrior.pos.x < goblin.pos.x) {
+      wait(0.2, () => {
+        goblin.move(rand(-GOBLIN_SPEED, 0), rand(0, GOBLIN_SPEED));
+      });
+    }
+    if (warrior.pos.y < goblin.pos.y && warrior.pos.x > goblin.pos.x) {
+      wait(0.2, () => {
+        goblin.move(rand(GOBLIN_SPEED, 0), rand(0, -GOBLIN_SPEED));
+      });
+    }
+  });
+  overlaps("goblin", "attack", (goblin) => {
+    goblin.life--;
+    if (goblin.life <= 0) {
+      destroy(goblin);
+    }
+  });
+  spawnGoblin();
 });
 
 go("game", 0);
