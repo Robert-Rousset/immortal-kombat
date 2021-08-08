@@ -112,7 +112,10 @@ scene("game", (levelIndex) => {
   let ATTACK_SPEED = 250;
   let WARRIOR_SPEED = 200;
   let DASH = 4;
-  let GOBLIN_SPEED = 80;
+  let GOBLIN_SPEED = 200;
+  let GOBLIN_HEALTH = 1;
+  let enemyCount = 0;
+  let totalEnemies = 5;
   layers([("background", "obj", "ui"), "obj"]);
   add([text("0"), pos(20, 20), layer("ui"), { value: "test" }, scale(4)]);
   add([
@@ -135,29 +138,18 @@ scene("game", (levelIndex) => {
       pos(width() / 2, height() / 2),
       scale(0.5),
       "goblin",
+      {
+        life: GOBLIN_HEALTH,
+      },
     ]);
-    wait(1, () => {
-      spawnGoblin();
-    });
+    if (enemyCount < totalEnemies)
+      wait(1, () => {
+        enemyCount++;
+        spawnGoblin();
+      });
   }
 
   spawnGoblin();
-  // function spawnGoblin() {
-  //   add([
-  //     sprite("goblin", { animSpeed: 0.5, frame: 0 }),
-  //     pos(rand(0, 800), rand((0, 1000))),
-  //     scale(1),
-  //     "goblin",
-  //   ]);
-  // wait(2, () => {
-  //   spawnGoblin();
-  // });
-  // }
-  // action("goblin", (goblin) => {
-  //   goblin.move(50, 50);
-  // });
-
-  // goblin.play("goblin1");
 
   action("goblin", (goblin) => {
     if (warrior.pos.x < goblin.pos.x && warrior.pos.y < goblin.pos.y) {
@@ -179,6 +171,12 @@ scene("game", (levelIndex) => {
       wait(0.2, () => {
         goblin.move(rand(GOBLIN_SPEED, 0), rand(0, -GOBLIN_SPEED));
       });
+    }
+  });
+  overlaps("goblin", "attack", (goblin) => {
+    goblin.life--;
+    if (goblin.life <= 0) {
+      destroy(goblin);
     }
   });
   // goblin.action(() => {});
