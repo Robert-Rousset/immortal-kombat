@@ -133,7 +133,7 @@ scene("game", (levelIndex) => {
   let ATTACK_SPEED = 0.5;
   let WARRIOR_SPEED = 250;
   let DASH = 4;
-  let WARRIOR_HEALTH = 100;
+  let WARRIOR_HEALTH = 10;
   //
   //
   //
@@ -159,10 +159,11 @@ scene("game", (levelIndex) => {
   layers([("background", "obj", "ui"), "obj"]);
   const score = add([
     text("0"),
-    pos(20, 20),
+    pos(50, 60),
     layer("ui"),
     { value: "test" },
     scale(4),
+    origin("center"),
   ]);
   const background = add([
     sprite("background"),
@@ -375,7 +376,6 @@ scene("game", (levelIndex) => {
     }
 
     if (killCount >= enemyCount) {
-      console.log("HEYYYYYY");
     }
   });
 
@@ -423,6 +423,20 @@ scene("game", (levelIndex) => {
     healthnum.text = warrior.health;
     if (healthnum.text < 100) {
       healthnum.pos.x = width() - 215;
+    }
+    if (healthnum.text === 0) {
+      add([
+        text("Game Over"),
+        pos(width() / 2, height() / 2 - 100),
+        layer("ui"),
+        scale(4),
+        origin("center"),
+      ]);
+      score.pos.x = width() / 2;
+      score.pos.y = height() / 2;
+      destroy(warrior);
+      window.submitHighscore(score.text);
+      window.gameHasEnded(5);
     }
   });
 
