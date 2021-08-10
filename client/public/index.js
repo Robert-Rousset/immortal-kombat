@@ -376,7 +376,6 @@ scene("game", (levelIndex) => {
     }
 
     if (killCount >= enemyCount) {
-      console.log("HEYYYYYY");
     }
   });
 
@@ -436,6 +435,8 @@ scene("game", (levelIndex) => {
       score.pos.x = width() / 2;
       score.pos.y = height() / 2;
       destroy(warrior);
+      window.submitHighscore(score.text);
+      window.gameHasEnded(5);
     }
   });
 
