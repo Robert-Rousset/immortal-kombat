@@ -128,6 +128,7 @@ scene("game", (levelIndex) => {
   //
   //
   // WARRIOR STATS
+  let WARRIOR_DAMAGE = 2;
   let ATTACK_RANGE = 250;
   let ATTACK_SPEED = 0.5;
   let WARRIOR_SPEED = 250;
@@ -138,10 +139,9 @@ scene("game", (levelIndex) => {
   //
   //ENEMY STATS
   let GOBLIN_SPEED = 200;
-  let GOBLIN_HEALTH = 1;
+  let GOBLIN_HEALTH = 4;
   let GOBLIN_DAMAGE = 1;
   let SPAWN_RATE = 0.5;
-
   let GOBLIN_REACTION = 0.2;
 
   //
@@ -150,7 +150,8 @@ scene("game", (levelIndex) => {
   // GENERAL
   let healthpos = width() - 100;
   let enemyCount = 0;
-  let totalEnemies = 20;
+  let totalEnemies = 10;
+  let killCount = 0;
   //
   //
   //
@@ -168,26 +169,29 @@ scene("game", (levelIndex) => {
     pos(width() / 2, height() / 2),
     scale(2),
     origin("center"),
+    layer("background"),
   ]);
   const warrior = add([
     sprite("warriorRight"),
     pos(width() / 2, height() / 2),
     scale(0.15),
     color(rgba(1, 1, 1, 1)),
+    layer("obj"),
     {
       health: WARRIOR_HEALTH,
+      damage: WARRIOR_DAMAGE,
     },
   ]);
   const health = add([
     sprite("health", { animSpeed: 0.2, frame: 0 }),
-    pos(healthpos, 0),
+    pos(healthpos, 30),
     scale(0.2),
     "health",
   ]);
   health.play("pump");
   const healthnum = add([
     text(warrior.health),
-    pos(width() - 250, 15),
+    pos(width() - 250, 45),
     layer("ui"),
     scale(3),
   ]);
@@ -318,6 +322,7 @@ scene("game", (levelIndex) => {
         sprite("attack", { animSpeed: 0.05, frame: 0 }),
         pos(warrior.pos.add(-25, -20)),
         scale(0.3),
+        layer("obj"),
         "attack",
         {
           dir: mpos.sub(warriorLocation).unit(),
@@ -351,20 +356,26 @@ scene("game", (levelIndex) => {
 
   //ATTACK HITS GOBLIN
   overlaps("goblin", "attack", (goblin) => {
-    score.text++;
-    goblin.life--;
+    goblin.health = goblin.health - warrior.damage;
     goblin.color = { r: 1, g: 0, b: 0, a: 1 };
     wait(1, () => {
       goblin.color = { r: 1, g: 1, b: 1, a: 1 };
     });
-    if (goblin.life <= 0) {
+    if (goblin.health <= 0) {
+      score.text++;
       destroy(goblin);
       add([
         sprite("splat"),
         pos(goblin.pos.x - 10, goblin.pos.y + 10),
         scale(0.05),
         color(1, 1, 1, 0.5),
+        layer("background"),
       ]);
+      killCount++;
+    }
+
+    if (killCount >= enemyCount) {
+      console.log("HEYYYYYY");
     }
   });
 
@@ -377,7 +388,7 @@ scene("game", (levelIndex) => {
   //
   //
   //WARRIOR HEALTH
-  hitanim = 0.2;
+  hitanim = 0.3;
   warrior.overlaps("goblin", () => {
     warrior.health = warrior.health - GOBLIN_DAMAGE;
     warrior.color = { r: 1, g: 0, b: 0, a: 1 };
@@ -430,9 +441,10 @@ scene("game", (levelIndex) => {
         pos(-100, rand(-100, height())),
         scale(0.5),
         color(1, 1, 1, 1),
+        layer("obj"),
         "goblin",
         {
-          life: GOBLIN_HEALTH,
+          health: GOBLIN_HEALTH,
         },
       ]);
       goblin1.play("goblin1");
@@ -445,9 +457,10 @@ scene("game", (levelIndex) => {
         pos(width(), rand(-100, height())),
         scale(0.5),
         color(1, 1, 1, 1),
+        layer("obj"),
         "goblin",
         {
-          life: GOBLIN_HEALTH,
+          health: GOBLIN_HEALTH,
         },
       ]);
       goblin2.play("goblin2");
@@ -460,9 +473,10 @@ scene("game", (levelIndex) => {
         pos(rand(-100, width()), -100),
         scale(0.5),
         color(1, 1, 1, 1),
+        layer("obj"),
         "goblin",
         {
-          life: GOBLIN_HEALTH,
+          health: GOBLIN_HEALTH,
         },
       ]);
       goblin3.play("goblin3");
@@ -476,14 +490,15 @@ scene("game", (levelIndex) => {
         pos(rand(-100, width()), height()),
         scale(0.5),
         color(1, 1, 1, 1),
+        layer("obj"),
         "goblin",
         {
-          life: GOBLIN_HEALTH,
+          health: GOBLIN_HEALTH,
         },
       ]);
       goblin4.play("goblin4");
     }
-    if (enemyCount < totalEnemies)
+    if (enemyCount <= totalEnemies)
       wait(SPAWN_RATE, () => {
         enemyCount++;
         spawnGoblin();
