@@ -42,6 +42,24 @@ h1 {
   color: white;
   font-family: "MedievalSharp", cursive;
 }
+h2 {
+  font-size: 6rem;
+  color: white;
+  font-family: "MedievalSharp", cursive;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+h3 {
+  font-size: 4rem;
+  color: white;
+  font-family: "MedievalSharp", cursive;
+}
+h5 {
+  font-size: 1.5rem;
+  color: white;
+  font-family: "MedievalSharp", cursive;
+}
 .shrink-h1 {
   font-size: 3rem;
   padding-top: 20px;
@@ -146,6 +164,19 @@ h1 {
   opacity: 1;
   transition: ease-in-out 2s;
 }
+.scoreboard-container {
+  position: absolute;
+  width: 100%;
+  bottom: 300px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 form {
   display: flex;
   align-items: center;
@@ -198,4 +229,8 @@ input:focus {
   width: 40px;
   z-index: 1;
   transform: translateY(50px);
+}
+
+.score-hidden {
+  display: none;
 }

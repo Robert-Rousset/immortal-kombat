@@ -15,14 +15,11 @@ function resolveGameStats() {
   }
 }
 
-function submitHighscore(score) {
-  return score;
-}
-
-function gameHasEnded(dead) {
-  return dead;
+function score(score) {
+  let highscoreBox = document.querySelector(".score-hidden");
+  highscoreBox.setAttribute("class", "scoreboard-container");
+  let highscore = document.querySelector(".score");
+  highscore.innerHTML = score;
 }
 
 globalThis.resolveGameStats = resolveGameStats();
-globalThis.submitHighscore = submitHighscore(score);
-globalThis.gameHasEnded = gameHasEnded(dead);

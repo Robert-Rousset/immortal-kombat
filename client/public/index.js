@@ -425,18 +425,8 @@ scene("game", (levelIndex) => {
       healthnum.pos.x = width() - 215;
     }
     if (healthnum.text === 0) {
-      add([
-        text("Game Over"),
-        pos(width() / 2, height() / 2 - 100),
-        layer("ui"),
-        scale(4),
-        origin("center"),
-      ]);
-      score.pos.x = width() / 2;
-      score.pos.y = height() / 2;
       destroy(warrior);
-      window.submitHighscore(score.text);
-      window.gameHasEnded(5);
+      window.score(score.text);
     }
   });
 
