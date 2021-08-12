@@ -231,7 +231,7 @@ input:focus {
   border-radius: 20px;
 }
 
-input {
+.score-input {
   width: 30%;
 }
 
@@ -261,6 +261,23 @@ input {
 .play-hidden,
 .submit-hidden,
 .score-hidden,
-.hidden {
+.hidden,
+.stats-hidden {
   display: none;
+}
+
+.stats-box {
+  width: 100%;
+
+  padding: 2rem;
+  position: absolute;
+  background-color: black;
+}
+.button-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.next-round {
+  margin-top: 200px;
 }

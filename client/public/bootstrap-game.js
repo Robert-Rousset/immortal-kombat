@@ -15,6 +15,11 @@ function resolveGameStats() {
   }
 }
 
+function endRound() {
+  let statsBox = document.querySelector(".stats-hidden");
+  statsBox.setAttribute("class", "stats-box");
+}
+
 function score(score) {
   let gameoverBox = document.querySelector(".score-hidden");
   gameoverBox.setAttribute("class", "scoreboard-container");

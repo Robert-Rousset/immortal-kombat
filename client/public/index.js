@@ -149,14 +149,14 @@ let GOBLIN_REACTION = 0.2;
 //
 // GENERAL
 
-let totalEnemies = 10;
+let totalEnemies = 9;
 
 scene("game", (levelIndex) => {
   //SETUP
   origin("center");
 
   let healthpos = width() - 100;
-  let enemyCount = 0;
+  let enemyCount = 1;
 
   let killCount = 0;
 
@@ -381,7 +381,8 @@ scene("game", (levelIndex) => {
       killCount++;
     }
 
-    if (killCount >= enemyCount) {
+    if (killCount === enemyCount) {
+      endRound();
     }
   });
 
