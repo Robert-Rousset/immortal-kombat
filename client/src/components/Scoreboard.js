@@ -1,4 +1,4 @@
-export default function ThoughtList({ scores }) {
+export default function Scoreboard({ scores }) {
   if (!scores.length) {
     return <h3 className="scoreboard">No High Scores Yet</h3>;
   }

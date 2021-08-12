@@ -121,40 +121,45 @@ loadSprite("goblin", "./img/sprites/enemy/goblin-army.png", {
 //
 loadSprite("splat", "./img/blood-splatter.png");
 
+// WARRIOR STATS
+let WARRIOR_DAMAGE = 2;
+let ATTACK_RANGE = 250;
+let ATTACK_SPEED = 0.5;
+let WARRIOR_SPEED = 250;
+let DASH = 4;
+let WARRIOR_HEALTH = 10;
+
+function increaseDamage() {
+  WARRIOR_DAMAGE = WARRIOR_DAMAGE + 2;
+  return WARRIOR_DAMAGE;
+}
+
+//
+//
+//
+//ENEMY STATS
+let GOBLIN_SPEED = 200;
+let GOBLIN_HEALTH = 4;
+let GOBLIN_DAMAGE = 1;
+let SPAWN_RATE = 0.5;
+let GOBLIN_REACTION = 0.2;
+
+//
+//
+//
+// GENERAL
+
+let totalEnemies = 10;
+
 scene("game", (levelIndex) => {
   //SETUP
   origin("center");
-  //
-  //
-  //
-  // WARRIOR STATS
-  let WARRIOR_DAMAGE = 2;
-  let ATTACK_RANGE = 250;
-  let ATTACK_SPEED = 0.5;
-  let WARRIOR_SPEED = 250;
-  let DASH = 4;
-  let WARRIOR_HEALTH = 10;
-  //
-  //
-  //
-  //ENEMY STATS
-  let GOBLIN_SPEED = 200;
-  let GOBLIN_HEALTH = 4;
-  let GOBLIN_DAMAGE = 1;
-  let SPAWN_RATE = 0.5;
-  let GOBLIN_REACTION = 0.2;
 
-  //
-  //
-  //
-  // GENERAL
   let healthpos = width() - 100;
   let enemyCount = 0;
-  let totalEnemies = 10;
+
   let killCount = 0;
-  //
-  //
-  //
+
   // LOADING IN UI/ WARRIOR SPRITE
   layers([("background", "obj", "ui"), "obj"]);
   const score = add([
@@ -235,6 +240,7 @@ scene("game", (levelIndex) => {
   keyPress("a", () => {
     warrior.changeSprite("warriorLeft", { animSpeed: 0.1, frame: 0 });
     warrior.play("walk");
+    increaseDamage();
   });
   keyDown("a", () => {
     warrior.move(-WARRIOR_SPEED, 0);
