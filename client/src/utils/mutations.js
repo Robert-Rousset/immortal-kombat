@@ -23,3 +23,13 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const SUBMIT_SCORE = gql`
+  mutation submitScore($name: String!, $score: String!) {
+    submitScore(name: $name, score: $score) {
+      _id
+      name
+      score
+    }
+  }
+`;

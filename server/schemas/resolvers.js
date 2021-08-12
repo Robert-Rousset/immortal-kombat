@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User } = require("../models");
+const { User, Scoreboard } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -17,6 +17,9 @@ const resolvers = {
         return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError("You need to be logged in!");
+    },
+    scores: async () => {
+      return Scoreboard.find();
     },
   },
 
@@ -42,6 +45,9 @@ const resolvers = {
 
       const token = signToken(profile);
       return { token, profile };
+    },
+    submitScore: async (parent, { name, score }) => {
+      return Scoreboard.create({ name, score });
     },
   },
 };
