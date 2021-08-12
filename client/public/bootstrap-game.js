@@ -16,8 +16,8 @@ function resolveGameStats() {
 }
 
 function score(score) {
-  let highscoreBox = document.querySelector(".score-hidden");
-  highscoreBox.setAttribute("class", "scoreboard-container");
+  let gameoverBox = document.querySelector(".score-hidden");
+  gameoverBox.setAttribute("class", "scoreboard-container");
   let highscore = document.querySelector(".score");
   highscore.innerHTML = score;
 }

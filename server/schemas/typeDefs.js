@@ -7,6 +7,12 @@ const typeDefs = gql`
     password: String
   }
 
+  type Scoreboard {
+    _id: ID
+    name: String
+    score: String
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -16,11 +22,13 @@ const typeDefs = gql`
     users: [User]!
     user(userId: ID!): User
     me: User
+    scores: [Scoreboard]!
   }
 
   type Mutation {
     addUser(email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    submitScore(name: String!, score: String!): Scoreboard
   }
 `;
 
