@@ -10,6 +10,7 @@ import { setContext } from "@apollo/client/link/context";
 
 import Header from "./components/Header";
 import Profile from "./components/Profile";
+import GameOver from "./components/GameOver";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -58,6 +59,7 @@ function App() {
       <ApolloProvider client={client}>
         <Header currentPage={currentPage} handlePageChange={handlePageChange} />
         {renderPage()}
+        <GameOver />
       </ApolloProvider>
     </>
   );
