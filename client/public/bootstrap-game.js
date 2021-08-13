@@ -15,9 +15,31 @@ function resolveGameStats() {
   }
 }
 
-function endRound() {
+function endRound(
+  health,
+  attackDamage,
+  attackSpeed,
+  attackRange,
+  movementSpeed,
+  dash
+) {
   let statsBox = document.querySelector(".stats-hidden");
-  statsBox.setAttribute("class", "stats-box");
+
+  let healthStat = document.querySelector("#health");
+  let damageStat = document.querySelector("#attack-damage");
+  let attackSpeedStat = document.querySelector("#attack-speed");
+  let attackRangeStat = document.querySelector("#attack-range");
+  let movementSpeedStat = document.querySelector("#movement-speed");
+  let dashStat = document.querySelector("#dash");
+
+  statsBox.setAttribute("class", "statflex");
+
+  healthStat.innerHTML = ` ${health}`;
+  damageStat.innerHTML = ` ${attackDamage}`;
+  attackSpeedStat.innerHTML = ` ${attackSpeed}`;
+  attackRangeStat.innerHTML = ` ${attackRange}`;
+  movementSpeedStat.innerHTML = ` ${movementSpeed}`;
+  dashStat.innerHTML = `${dash}`;
 }
 
 function score(score) {

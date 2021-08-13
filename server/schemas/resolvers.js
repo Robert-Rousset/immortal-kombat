@@ -19,7 +19,7 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     scores: async () => {
-      return Scoreboard.find();
+      return Scoreboard.find().sort({ score: "desc" });
     },
   },
 
