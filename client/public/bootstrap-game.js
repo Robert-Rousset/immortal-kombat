@@ -36,11 +36,13 @@ function endRound(
 
   healthStat.innerHTML = ` ${health}`;
   damageStat.innerHTML = ` ${attackDamage}`;
-  attackSpeedStat.innerHTML = ` ${attackSpeed}`;
+  attackSpeedStat.innerHTML = ` ${Math.round(attackSpeed * 10) / 10}`;
   attackRangeStat.innerHTML = ` ${attackRange}`;
   movementSpeedStat.innerHTML = ` ${movementSpeed}`;
   dashStat.innerHTML = `${dash}`;
 }
+
+function updateStats() {}
 
 function score(score) {
   let gameoverBox = document.querySelector(".score-hidden");

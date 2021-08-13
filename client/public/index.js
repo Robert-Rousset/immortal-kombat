@@ -5,6 +5,7 @@ const k = kaboom({
   scale: 1,
   crisp: true,
 });
+
 loadSprite("background", "./img/battleground.jpg");
 
 //
@@ -124,57 +125,129 @@ loadSprite("splat", "./img/blood-splatter.png");
 // WARRIOR STATS
 let WARRIOR_HEALTH = 10;
 let ATTACK_DAMAGE = 2;
-let ATTACK_SPEED = 0.8;
+let ATTACK_SPEED = 0.5;
 let ATTACK_RANGE = 250;
 let WARRIOR_SPEED = 250;
 let DASH_DISTANCE = 4;
 
 //HEALTH INCREASES
 function increaseHealth() {
-  WARRIOR_HEALTH = WARRIOR_HEALTH + 5;
+  if (WARRIOR_HEALTH >= 35) {
+    return;
+  } else {
+    let healthStat = document.querySelector("#health");
+    WARRIOR_HEALTH = WARRIOR_HEALTH + 5;
+    healthStat.innerHTML = ` ${WARRIOR_HEALTH}`;
+  }
 }
 function decreaseHealth() {
-  WARRIOR_HEALTH = WARRIOR_HEALTH - 5;
+  if (WARRIOR_HEALTH <= 10) {
+    return;
+  } else {
+    let healthStat = document.querySelector("#health");
+    WARRIOR_HEALTH = WARRIOR_HEALTH - 5;
+    healthStat.innerHTML = ` ${WARRIOR_HEALTH}`;
+  }
 }
 
 //DAMAGE INCREASES
 function increaseDamage() {
-  ATTACK_DAMAGE = ATTACK_DAMAGE + 2;
+  if (ATTACK_DAMAGE >= 64) {
+    return;
+  } else {
+    let damageStat = document.querySelector("#attack-damage");
+    ATTACK_DAMAGE = ATTACK_DAMAGE * 2;
+    damageStat.innerHTML = ` ${ATTACK_DAMAGE}`;
+  }
 }
 function decreaseDamage() {
-  ATTACK_DAMAGE = ATTACK_DAMAGE - 2;
+  if (ATTACK_DAMAGE <= 2) {
+    return;
+  } else {
+    let damageStat = document.querySelector("#attack-damage");
+    ATTACK_DAMAGE = ATTACK_DAMAGE / 2;
+    damageStat.innerHTML = ` ${ATTACK_DAMAGE}`;
+  }
 }
 
 //ATTACK SPEED INCREASES
 function increaseAttackSpeed() {
-  ATTACK_SPEED = ATTACK_SPEED - 0.1;
+  if (ATTACK_SPEED <= 0) {
+    return;
+  } else {
+    let attackSpeedStat = document.querySelector("#attack-speed");
+    ATTACK_SPEED = ATTACK_SPEED - 0.1;
+    attackSpeedStat.innerHTML = ` ${Math.round(ATTACK_SPEED * 10) / 10}`;
+  }
 }
 function decreaseAttackSpeed() {
-  ATTACK_SPEED = ATTACK_SPEED + 0.1;
+  if (ATTACK_SPEED >= 0.5) {
+    return;
+  } else {
+    let attackSpeedStat = document.querySelector("#attack-speed");
+    ATTACK_SPEED = ATTACK_SPEED + 0.1;
+    attackSpeedStat.innerHTML = ` ${Math.round(ATTACK_SPEED * 10) / 10}`;
+  }
 }
 
 //ATTACK RANGE INCREASES
 function increaseAttackRange() {
-  ATTACK_RANGE = ATTACK_RANGE + 10;
+  if (ATTACK_RANGE >= 350) {
+    return;
+  } else {
+    let attackRangeStat = document.querySelector("#attack-range");
+    ATTACK_RANGE = ATTACK_RANGE + 20;
+    attackRangeStat.innerHTML = ` ${ATTACK_RANGE}`;
+  }
 }
 function decreaseAttackRange() {
-  ATTACK_RANGE = ATTACK_RANGE - 10;
+  if (ATTACK_RANGE <= 250) {
+    return;
+  } else {
+    let attackRangeStat = document.querySelector("#attack-range");
+    ATTACK_RANGE = ATTACK_RANGE - 20;
+    attackRangeStat.innerHTML = ` ${ATTACK_RANGE}`;
+  }
 }
 
 // INCREASE WARRIOR SPEED
 function increaseWarriorSpeed() {
-  WARRIOR_SPEED = WARRIOR_SPEED + 10;
+  if (WARRIOR_SPEED >= 300) {
+    return;
+  } else {
+    let movementSpeedStat = document.querySelector("#movement-speed");
+    WARRIOR_SPEED = WARRIOR_SPEED + 10;
+    movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
+  }
 }
 function decreaseWarriorSpeed() {
-  WARRIOR_SPEED = WARRIOR_SPEED - 10;
+  if (WARRIOR_SPEED >= 250) {
+    return;
+  } else {
+    let movementSpeedStat = document.querySelector("#movement-speed");
+    WARRIOR_SPEED = WARRIOR_SPEED - 10;
+    movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
+  }
 }
 
 //INCREASE DASH DISTANCE
 function increaseDashDistance() {
-  DASH_DISTANCE = DASH_DISTANCE + 1;
+  if (DASH_DISTANCE >= 9) {
+    return;
+  } else {
+    let dashStat = document.querySelector("#dash");
+    DASH_DISTANCE = DASH_DISTANCE + 1;
+    dashStat.innerHTML = `${DASH_DISTANCE}`;
+  }
 }
 function decreaseDashDistance() {
-  DASH_DISTANCE = DASH_DISTANCE - 1;
+  if (DASH_DISTANCE <= 4) {
+    return;
+  } else {
+    let dashStat = document.querySelector("#dash");
+    DASH_DISTANCE = DASH_DISTANCE - 1;
+    dashStat.innerHTML = `${DASH_DISTANCE}`;
+  }
 }
 
 //
@@ -192,7 +265,7 @@ let GOBLIN_REACTION = 0.2;
 //
 // GENERAL
 
-let totalEnemies = 9;
+let totalEnemies = 1;
 
 scene("game", (levelIndex) => {
   //SETUP

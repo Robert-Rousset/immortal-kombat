@@ -26,8 +26,6 @@ export default function GameOver() {
   const { loading, data } = useQuery(QUERY_HIGHSCORES);
   const scores = data?.scores || [];
 
-  console.log(scores);
-
   async function submitScoreClick() {
     submitScoreButton.setAttribute("class", "submit-hidden");
     playAgainButton.setAttribute("class", "button play-again");
