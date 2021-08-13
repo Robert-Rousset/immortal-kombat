@@ -122,16 +122,59 @@ loadSprite("goblin", "./img/sprites/enemy/goblin-army.png", {
 loadSprite("splat", "./img/blood-splatter.png");
 
 // WARRIOR STATS
-let WARRIOR_DAMAGE = 2;
-let ATTACK_RANGE = 250;
-let ATTACK_SPEED = 0.5;
-let WARRIOR_SPEED = 250;
-let DASH = 4;
 let WARRIOR_HEALTH = 10;
+let ATTACK_DAMAGE = 2;
+let ATTACK_SPEED = 0.8;
+let ATTACK_RANGE = 250;
+let WARRIOR_SPEED = 250;
+let DASH_DISTANCE = 4;
 
+//HEALTH INCREASES
+function increaseHealth() {
+  WARRIOR_HEALTH = WARRIOR_HEALTH + 5;
+}
+function decreaseHealth() {
+  WARRIOR_HEALTH = WARRIOR_HEALTH - 5;
+}
+
+//DAMAGE INCREASES
 function increaseDamage() {
-  WARRIOR_DAMAGE = WARRIOR_DAMAGE + 2;
-  return WARRIOR_DAMAGE;
+  ATTACK_DAMAGE = ATTACK_DAMAGE + 2;
+}
+function decreaseDamage() {
+  ATTACK_DAMAGE = ATTACK_DAMAGE - 2;
+}
+
+//ATTACK SPEED INCREASES
+function increaseAttackSpeed() {
+  ATTACK_SPEED = ATTACK_SPEED - 0.1;
+}
+function decreaseAttackSpeed() {
+  ATTACK_SPEED = ATTACK_SPEED + 0.1;
+}
+
+//ATTACK RANGE INCREASES
+function increaseAttackRange() {
+  ATTACK_RANGE = ATTACK_RANGE + 10;
+}
+function decreaseAttackRange() {
+  ATTACK_RANGE = ATTACK_RANGE - 10;
+}
+
+// INCREASE WARRIOR SPEED
+function increaseWarriorSpeed() {
+  WARRIOR_SPEED = WARRIOR_SPEED + 10;
+}
+function decreaseWarriorSpeed() {
+  WARRIOR_SPEED = WARRIOR_SPEED - 10;
+}
+
+//INCREASE DASH DISTANCE
+function increaseDashDistance() {
+  DASH_DISTANCE = DASH_DISTANCE + 1;
+}
+function decreaseDashDistance() {
+  DASH_DISTANCE = DASH_DISTANCE - 1;
 }
 
 //
@@ -149,14 +192,14 @@ let GOBLIN_REACTION = 0.2;
 //
 // GENERAL
 
-let totalEnemies = 10;
+let totalEnemies = 9;
 
 scene("game", (levelIndex) => {
   //SETUP
   origin("center");
 
   let healthpos = width() - 100;
-  let enemyCount = 0;
+  let enemyCount = 1;
 
   let killCount = 0;
 
@@ -185,7 +228,7 @@ scene("game", (levelIndex) => {
     layer("obj"),
     {
       health: WARRIOR_HEALTH,
-      damage: WARRIOR_DAMAGE,
+      damage: ATTACK_DAMAGE,
     },
   ]);
   const health = add([
@@ -198,6 +241,36 @@ scene("game", (levelIndex) => {
   const healthnum = add([
     text(warrior.health),
     pos(width() - 250, 45),
+    layer("ui"),
+    scale(3),
+  ]);
+  const damagenum = add([
+    text(ATTACK_DAMAGE),
+    pos(width() - 250, 95),
+    layer("ui"),
+    scale(3),
+  ]);
+  const attackspeednum = add([
+    text(ATTACK_SPEED),
+    pos(width() - 250, 145),
+    layer("ui"),
+    scale(3),
+  ]);
+  const attackrangenum = add([
+    text(ATTACK_RANGE),
+    pos(width() - 250, 195),
+    layer("ui"),
+    scale(3),
+  ]);
+  const movementspeednum = add([
+    text(WARRIOR_SPEED),
+    pos(width() - 250, 245),
+    layer("ui"),
+    scale(3),
+  ]);
+  const dashnum = add([
+    text(DASH_DISTANCE),
+    pos(width() - 250, 295),
     layer("ui"),
     scale(3),
   ]);
@@ -240,7 +313,6 @@ scene("game", (levelIndex) => {
   keyPress("a", () => {
     warrior.changeSprite("warriorLeft", { animSpeed: 0.1, frame: 0 });
     warrior.play("walk");
-    increaseDamage();
   });
   keyDown("a", () => {
     warrior.move(-WARRIOR_SPEED, 0);
@@ -294,10 +366,10 @@ scene("game", (levelIndex) => {
   let dashIsNotCooldown = true;
   keyPress("space", () => {
     if (dashIsNotCooldown) {
-      WARRIOR_SPEED = WARRIOR_SPEED * DASH;
+      WARRIOR_SPEED = WARRIOR_SPEED * DASH_DISTANCE;
       dashIsNotCooldown = false;
       wait(0.08, () => {
-        WARRIOR_SPEED = WARRIOR_SPEED / DASH;
+        WARRIOR_SPEED = WARRIOR_SPEED / DASH_DISTANCE;
         resetDashCooldown();
       });
     }
@@ -381,7 +453,15 @@ scene("game", (levelIndex) => {
       killCount++;
     }
 
-    if (killCount >= enemyCount) {
+    if (killCount === enemyCount) {
+      endRound(
+        WARRIOR_HEALTH,
+        ATTACK_DAMAGE,
+        ATTACK_SPEED,
+        ATTACK_RANGE,
+        WARRIOR_SPEED,
+        DASH_DISTANCE
+      );
     }
   });
 

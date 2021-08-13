@@ -10,6 +10,7 @@ import { setContext } from "@apollo/client/link/context";
 
 import Header from "./components/Header";
 import Profile from "./components/Profile";
+import UpdateStats from "./components/UpdateStats";
 import GameOver from "./components/GameOver";
 
 const httpLink = createHttpLink({
@@ -60,6 +61,7 @@ function App() {
         <Header currentPage={currentPage} handlePageChange={handlePageChange} />
         {renderPage()}
         <GameOver />
+        <UpdateStats />
       </ApolloProvider>
     </>
   );

@@ -68,6 +68,7 @@ export default function GameOver() {
       <h5>Score:</h5>
       <h3 className="score">0</h3>
       <input
+        className="score-input"
         name="warriorName"
         placeholder="name..."
         value={warriorName}
