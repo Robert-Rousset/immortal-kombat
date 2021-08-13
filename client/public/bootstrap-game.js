@@ -1,20 +1,3 @@
-class GameStats {
-  constructor(damage = 1, hitpoints = 100, attackspeed = 1) {
-    this.damage = damage;
-    this.hitpoints = hitpoints;
-    this.attackspeed = attackspeed;
-  }
-}
-
-function resolveGameStats() {
-  if (globalThis.gameStats === undefined) {
-    globalThis.gameStats = new GameStats();
-    return globalThis.gameStats;
-  } else {
-    return globalThis.gameStats;
-  }
-}
-
 function endRound(
   health,
   attackDamage,
@@ -35,7 +18,7 @@ function endRound(
   statsBox.setAttribute("class", "statflex");
 
   healthStat.innerHTML = ` ${health}`;
-  damageStat.innerHTML = ` ${attackDamage}`;
+  damageStat.innerHTML = ` ${Math.round(attackDamage * 10) / 10}`;
   attackSpeedStat.innerHTML = ` ${Math.round(attackSpeed * 10) / 10}`;
   attackRangeStat.innerHTML = ` ${attackRange}`;
   movementSpeedStat.innerHTML = ` ${movementSpeed}`;
@@ -50,5 +33,3 @@ function score(score) {
   let highscore = document.querySelector(".score");
   highscore.innerHTML = score;
 }
-
-globalThis.resolveGameStats = resolveGameStats();

@@ -343,8 +343,8 @@ input:focus {
   justify-content: center;
 }
 .no-ability-point-box {
-  margin-right: 5px;
-  margin-left: 5px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .ability-point {
