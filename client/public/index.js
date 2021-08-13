@@ -121,132 +121,188 @@ loadSprite("goblin", "./img/sprites/enemy/goblin-army.png", {
 //
 //
 loadSprite("splat", "./img/blood-splatter.png");
+let abilityPoints = 0;
+let healthPoints = 0;
+let damagePoints = 0;
+let speedPoints = 0;
+let rangePoints = 0;
+let movementPoints = 0;
+let dashPoints = 0;
 
 // WARRIOR STATS
 let WARRIOR_HEALTH = 10;
 let ATTACK_DAMAGE = 2;
-let ATTACK_SPEED = 0.5;
-let ATTACK_RANGE = 250;
-let WARRIOR_SPEED = 250;
+let ATTACK_SPEED = 1;
+let ATTACK_RANGE = 200;
+let WARRIOR_SPEED = 220;
 let DASH_DISTANCE = 4;
 
 //HEALTH INCREASES
 function increaseHealth() {
-  if (WARRIOR_HEALTH >= 35) {
+  if (WARRIOR_HEALTH >= 70 || abilityPoints >= 13) {
     return;
   } else {
     let healthStat = document.querySelector("#health");
     WARRIOR_HEALTH = WARRIOR_HEALTH + 5;
     healthStat.innerHTML = ` ${WARRIOR_HEALTH}`;
+    abilityPoints++;
+    healthPoints++;
+    console.log(healthPoints);
+    renderAbilities(healthPoints, "he");
+    renderAbilityPoints(abilityPoints);
   }
 }
 function decreaseHealth() {
-  if (WARRIOR_HEALTH <= 10) {
+  if (WARRIOR_HEALTH <= 10 || abilityPoints <= 0) {
     return;
   } else {
     let healthStat = document.querySelector("#health");
     WARRIOR_HEALTH = WARRIOR_HEALTH - 5;
     healthStat.innerHTML = ` ${WARRIOR_HEALTH}`;
+    abilityPoints--;
+    healthPoints--;
+    renderAbilities(healthPoints, "he");
+    renderAbilityPoints(abilityPoints);
   }
 }
 
 //DAMAGE INCREASES
 function increaseDamage() {
-  if (ATTACK_DAMAGE >= 64) {
+  if (ATTACK_DAMAGE >= 562.9 || abilityPoints >= 13) {
     return;
   } else {
     let damageStat = document.querySelector("#attack-damage");
-    ATTACK_DAMAGE = ATTACK_DAMAGE * 2;
-    damageStat.innerHTML = ` ${ATTACK_DAMAGE}`;
+    ATTACK_DAMAGE = ATTACK_DAMAGE * 1.6;
+    damageStat.innerHTML = ` ${Math.round(ATTACK_DAMAGE * 10) / 10}`;
+    abilityPoints++;
+    damagePoints++;
+    renderAbilities(damagePoints, "d");
+    renderAbilityPoints(abilityPoints);
   }
 }
 function decreaseDamage() {
-  if (ATTACK_DAMAGE <= 2) {
+  if (ATTACK_DAMAGE <= 2 || abilityPoints <= 0) {
     return;
   } else {
     let damageStat = document.querySelector("#attack-damage");
-    ATTACK_DAMAGE = ATTACK_DAMAGE / 2;
-    damageStat.innerHTML = ` ${ATTACK_DAMAGE}`;
+    ATTACK_DAMAGE = ATTACK_DAMAGE / 1.6;
+    damageStat.innerHTML = ` ${Math.round(ATTACK_DAMAGE * 10) / 10}`;
+    abilityPoints--;
+    damagePoints--;
+    renderAbilities(damagePoints, "d");
+    renderAbilityPoints(abilityPoints);
   }
 }
 
 //ATTACK SPEED INCREASES
 function increaseAttackSpeed() {
-  if (ATTACK_SPEED <= 0) {
+  if (ATTACK_SPEED <= 0 || abilityPoints >= 13) {
     return;
   } else {
     let attackSpeedStat = document.querySelector("#attack-speed");
     ATTACK_SPEED = ATTACK_SPEED - 0.1;
     attackSpeedStat.innerHTML = ` ${Math.round(ATTACK_SPEED * 10) / 10}`;
+    abilityPoints++;
+    speedPoints++;
+    renderAbilities(speedPoints, "as");
+    renderAbilityPoints(abilityPoints);
   }
 }
 function decreaseAttackSpeed() {
-  if (ATTACK_SPEED >= 0.5) {
+  if (ATTACK_SPEED >= 1 || abilityPoints <= 0) {
     return;
   } else {
     let attackSpeedStat = document.querySelector("#attack-speed");
     ATTACK_SPEED = ATTACK_SPEED + 0.1;
     attackSpeedStat.innerHTML = ` ${Math.round(ATTACK_SPEED * 10) / 10}`;
+    abilityPoints--;
+    speedPoints--;
+    renderAbilities(speedPoints, "as");
+    renderAbilityPoints(abilityPoints);
   }
 }
 
 //ATTACK RANGE INCREASES
 function increaseAttackRange() {
-  if (ATTACK_RANGE >= 350) {
+  if (ATTACK_RANGE >= 1000 || abilityPoints >= 13) {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
-    ATTACK_RANGE = ATTACK_RANGE + 20;
+    ATTACK_RANGE = ATTACK_RANGE + 25;
     attackRangeStat.innerHTML = ` ${ATTACK_RANGE}`;
+    abilityPoints++;
+    rangePoints++;
+    renderAbilities(rangePoints, "ar");
+    renderAbilityPoints(abilityPoints);
   }
 }
 function decreaseAttackRange() {
-  if (ATTACK_RANGE <= 250) {
+  if (ATTACK_RANGE <= 250 || abilityPoints <= 0) {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
-    ATTACK_RANGE = ATTACK_RANGE - 20;
+    ATTACK_RANGE = ATTACK_RANGE - 25;
     attackRangeStat.innerHTML = ` ${ATTACK_RANGE}`;
+    abilityPoints--;
+    rangePoints--;
+    renderAbilities(rangePoints, "ar");
+    renderAbilityPoints(abilityPoints);
   }
 }
 
 // INCREASE WARRIOR SPEED
 function increaseWarriorSpeed() {
-  if (WARRIOR_SPEED >= 300) {
+  if (WARRIOR_SPEED >= 460 || abilityPoints >= 13) {
     return;
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
-    WARRIOR_SPEED = WARRIOR_SPEED + 10;
+    WARRIOR_SPEED = WARRIOR_SPEED + 20;
     movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
+    abilityPoints++;
+    movementPoints++;
+    renderAbilities(movementPoints, "m");
+    renderAbilityPoints(abilityPoints);
   }
 }
 function decreaseWarriorSpeed() {
-  if (WARRIOR_SPEED >= 250) {
+  if (WARRIOR_SPEED >= 250 || abilityPoints <= 0) {
     return;
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
-    WARRIOR_SPEED = WARRIOR_SPEED - 10;
+    WARRIOR_SPEED = WARRIOR_SPEED - 20;
     movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
+    abilityPoints--;
+    movementPoints--;
+    renderAbilities(movementPoints, "m");
+    renderAbilityPoints(abilityPoints);
   }
 }
 
 //INCREASE DASH DISTANCE
 function increaseDashDistance() {
-  if (DASH_DISTANCE >= 9) {
+  if (DASH_DISTANCE >= 20 || abilityPoints >= 13) {
     return;
   } else {
     let dashStat = document.querySelector("#dash");
     DASH_DISTANCE = DASH_DISTANCE + 1;
     dashStat.innerHTML = `${DASH_DISTANCE}`;
+    abilityPoints++;
+    dashPoints++;
+    renderAbilities(dashPoints, "da");
+    renderAbilityPoints(abilityPoints);
   }
 }
 function decreaseDashDistance() {
-  if (DASH_DISTANCE <= 4) {
+  if (DASH_DISTANCE <= 4 || abilityPoints <= 0) {
     return;
   } else {
     let dashStat = document.querySelector("#dash");
     DASH_DISTANCE = DASH_DISTANCE - 1;
     dashStat.innerHTML = `${DASH_DISTANCE}`;
+    abilityPoints--;
+    dashPoints--;
+    renderAbilities(dashPoints, "da");
+    renderAbilityPoints(abilityPoints);
   }
 }
 
@@ -268,6 +324,8 @@ let GOBLIN_REACTION = 0.2;
 let totalEnemies = 1;
 
 scene("game", (levelIndex) => {
+  abilityPoints = 0;
+  renderAbilityPoints(abilityPoints);
   //SETUP
   origin("center");
 
