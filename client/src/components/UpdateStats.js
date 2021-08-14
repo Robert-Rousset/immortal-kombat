@@ -4,13 +4,23 @@ import noAbilityPoint from "../img/abilitypoints/no-ability-point.png";
 export default function UpdateStats() {
   function nextRound() {
     let thisStatsBox = document.querySelector(".statflex");
+    let scorenum = Number(document.querySelector("#score").innerHTML);
+    console.log(scorenum);
     thisStatsBox.setAttribute("class", "stats-hidden");
-    window.go("game", 0);
+
+    window.go("game", scorenum);
+    window.increaseEnemies();
   }
   return (
     <div className="stats-hidden">
       <div className="stats-box">
-        <h2>WARRIOR STATS</h2>
+        <h5>
+          Score:<span id="score">0</span>
+        </h5>
+        <h2>WARRIOR STATS</h2>{" "}
+        <h5>
+          Round: <span id="round">0</span>
+        </h5>
         <article className="container">
           <section className="column">
             <div className="each-stat-container">
@@ -22,9 +32,7 @@ export default function UpdateStats() {
                 <div>
                   <button
                     className="upgrade-stat-neg"
-                    onClick={() => {
-                      window.decreaseHealth();
-                    }}
+                    onClick={window.decreaseHealth}
                   >
                     -
                   </button>

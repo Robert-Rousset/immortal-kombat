@@ -60,8 +60,8 @@ function App() {
       <ApolloProvider client={client}>
         <Header currentPage={currentPage} handlePageChange={handlePageChange} />
         {renderPage()}
-        <GameOver />
         <UpdateStats />
+        <GameOver />
       </ApolloProvider>
     </>
   );
