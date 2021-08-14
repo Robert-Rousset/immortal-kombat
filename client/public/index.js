@@ -128,6 +128,7 @@ let speedPoints = 0;
 let rangePoints = 0;
 let movementPoints = 0;
 let dashPoints = 0;
+let roundNumber = 1;
 
 // WARRIOR STATS
 let WARRIOR_HEALTH = 10;
@@ -139,7 +140,7 @@ let DASH_DISTANCE = 4;
 
 //HEALTH INCREASES
 function increaseHealth() {
-  if (WARRIOR_HEALTH >= 70 || abilityPoints >= 13) {
+  if (WARRIOR_HEALTH >= 70 || abilityPoints >= 3) {
     return;
   } else {
     let healthStat = document.querySelector("#health");
@@ -168,7 +169,7 @@ function decreaseHealth() {
 
 //DAMAGE INCREASES
 function increaseDamage() {
-  if (ATTACK_DAMAGE >= 562.9 || abilityPoints >= 13) {
+  if (ATTACK_DAMAGE >= 562.9 || abilityPoints >= 3) {
     return;
   } else {
     let damageStat = document.querySelector("#attack-damage");
@@ -196,7 +197,7 @@ function decreaseDamage() {
 
 //ATTACK SPEED INCREASES
 function increaseAttackSpeed() {
-  if (ATTACK_SPEED <= 0 || abilityPoints >= 13) {
+  if (ATTACK_SPEED <= 0 || abilityPoints >= 3) {
     return;
   } else {
     let attackSpeedStat = document.querySelector("#attack-speed");
@@ -224,7 +225,7 @@ function decreaseAttackSpeed() {
 
 //ATTACK RANGE INCREASES
 function increaseAttackRange() {
-  if (ATTACK_RANGE >= 1000 || abilityPoints >= 13) {
+  if (ATTACK_RANGE >= 1000 || abilityPoints >= 3) {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
@@ -252,7 +253,7 @@ function decreaseAttackRange() {
 
 // INCREASE WARRIOR SPEED
 function increaseWarriorSpeed() {
-  if (WARRIOR_SPEED >= 460 || abilityPoints >= 13) {
+  if (WARRIOR_SPEED >= 460 || abilityPoints >= 3) {
     return;
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
@@ -280,7 +281,7 @@ function decreaseWarriorSpeed() {
 
 //INCREASE DASH DISTANCE
 function increaseDashDistance() {
-  if (DASH_DISTANCE >= 20 || abilityPoints >= 13) {
+  if (DASH_DISTANCE >= 20 || abilityPoints >= 3) {
     return;
   } else {
     let dashStat = document.querySelector("#dash");
@@ -311,9 +312,9 @@ function decreaseDashDistance() {
 //
 //ENEMY STATS
 let GOBLIN_SPEED = 200;
-let GOBLIN_HEALTH = 4;
-let GOBLIN_DAMAGE = 1;
-let SPAWN_RATE = 0.5;
+let GOBLIN_HEALTH = 2;
+let GOBLIN_DAMAGE = 0;
+let SPAWN_RATE = 0.6;
 let GOBLIN_REACTION = 0.2;
 
 //
@@ -321,29 +322,25 @@ let GOBLIN_REACTION = 0.2;
 //
 // GENERAL
 
-let totalEnemies = 1;
+let enemyCount = 5;
 
-scene("game", (levelIndex) => {
-  abilityPoints = 0;
-  renderAbilityPoints(abilityPoints);
+function increaseEnemies() {
+  enemyCount = Math.round(enemyCount * 1.3);
+  roundNumber++;
+}
+
+scene("game", (scoreNumber) => {
   //SETUP
   origin("center");
-
-  let healthpos = width() - 100;
-  let enemyCount = 1;
-
-  let killCount = 0;
-
-  // LOADING IN UI/ WARRIOR SPRITE
   layers([("background", "obj", "ui"), "obj"]);
   const score = add([
-    text("0"),
-    pos(50, 60),
+    text(scoreNumber),
+    pos(150, 60),
     layer("ui"),
-    { value: "test" },
     scale(4),
     origin("center"),
   ]);
+
   const background = add([
     sprite("background"),
     pos(width() / 2, height() / 2),
@@ -362,6 +359,8 @@ scene("game", (levelIndex) => {
       damage: ATTACK_DAMAGE,
     },
   ]);
+
+  let healthpos = width() - 100;
   const health = add([
     sprite("health", { animSpeed: 0.2, frame: 0 }),
     pos(healthpos, 30),
@@ -371,397 +370,421 @@ scene("game", (levelIndex) => {
   health.play("pump");
   const healthnum = add([
     text(warrior.health),
-    pos(width() - 250, 45),
-    layer("ui"),
-    scale(3),
-  ]);
-  const damagenum = add([
-    text(ATTACK_DAMAGE),
-    pos(width() - 250, 95),
-    layer("ui"),
-    scale(3),
-  ]);
-  const attackspeednum = add([
-    text(ATTACK_SPEED),
-    pos(width() - 250, 145),
-    layer("ui"),
-    scale(3),
-  ]);
-  const attackrangenum = add([
-    text(ATTACK_RANGE),
-    pos(width() - 250, 195),
-    layer("ui"),
-    scale(3),
-  ]);
-  const movementspeednum = add([
-    text(WARRIOR_SPEED),
-    pos(width() - 250, 245),
-    layer("ui"),
-    scale(3),
-  ]);
-  const dashnum = add([
-    text(DASH_DISTANCE),
-    pos(width() - 250, 295),
+    pos(width() - 200, 45),
     layer("ui"),
     scale(3),
   ]);
 
-  //HEALTH FUNCTIONS MIGHT BE USED IF I FIGURE OUT A FIX
-  //
-  // function spawnHealth() {
-  //   if (health0 < WARRIOR_HEALTH) {
-  //     health0++;
-  //     healthpos = healthpos - 65;
-  //     let health = add([
-  //       sprite("health", { animSpeed: 0.15, frame: 0 }),
-  //       pos(healthpos, 0),
-  //       scale(0.2),
-  //       "health",
-  //     ]);
-  //     health.play("pump");
-  //     spawnHealth();
-  //   }
-  //   if (health0 === WARRIOR_HEALTH) {
-  //     healthpos = width() - 50;
-  //   }
-  // }
-  // spawnHealth();
-
-  //
-  //
-
-  //
-  //
-
-  //
-  //
-  //
-  //
-  //
-  //PLAYER ACTIONS//
-
-  // LEFT MOVEMENT
-  keyPress("a", () => {
-    warrior.changeSprite("warriorLeft", { animSpeed: 0.1, frame: 0 });
-    warrior.play("walk");
-  });
-  keyDown("a", () => {
-    warrior.move(-WARRIOR_SPEED, 0);
-  });
-  // keyRelease("a", () => {
-  //   warrior.play("idle");
-  // });
-
-  // DOWN MOVEMENT
-  keyPress("s", () => {
-    warrior.changeSprite("warriorDown", { animSpeed: 0.1, frame: 0 });
-    warrior.play("walk");
-  });
-  keyDown("s", () => {
-    warrior.move(0, WARRIOR_SPEED);
-  });
-  // keyRelease("s", () => {
-  //   warrior.play("idle");
-  // });
-
-  // RIGHT MOVEMENT
-  keyPress("d", () => {
-    warrior.changeSprite("warriorRight", { animSpeed: 0.1, frame: 0 });
-    warrior.play("walk");
-  });
-  keyDown("d", () => {
-    warrior.move(WARRIOR_SPEED, 0);
-  });
-  // keyRelease("d", () => {
-  //   warrior.play("idle");
-  // });
-
-  // UP MOVEMENT
-  keyPress("w", () => {
-    warrior.changeSprite("warriorUp", { animSpeed: 0.1, frame: 0 });
-    warrior.play("walk");
-  });
-  keyDown("w", () => {
-    warrior.move(0, -WARRIOR_SPEED);
-  });
-  // keyRelease("w", () => {
-  //   warrior.play("idle");
-  // });
-
-  //
-  //
-  //
-  //
-  //WARRIOR DASH
-
-  let dashIsNotCooldown = true;
-  keyPress("space", () => {
-    if (dashIsNotCooldown) {
-      WARRIOR_SPEED = WARRIOR_SPEED * DASH_DISTANCE;
-      dashIsNotCooldown = false;
-      wait(0.08, () => {
-        WARRIOR_SPEED = WARRIOR_SPEED / DASH_DISTANCE;
-        resetDashCooldown();
-      });
-    }
-  });
-  function resetDashCooldown() {
-    if (dashIsNotCooldown) {
-      wait(2, () => {
-        dashIsNotCooldown = true;
-      });
-    }
-    if (dashIsNotCooldown === false) {
-      wait(2, () => {
-        dashIsNotCooldown = true;
-      });
-    }
-  }
-
-  //
-  //
-  //
-  //
-  //WARRIOR ATTACK
-  let attackIsNotCooldown = true;
-  mouseClick(() => {
-    const warriorLocation = warrior.pos.add(-20, 0);
-    const mpos = mousePos();
-    if (attackIsNotCooldown) {
-      const attack = add([
-        sprite("attack", { animSpeed: 0.05, frame: 0 }),
-        pos(warrior.pos.add(-25, -20)),
-        scale(0.3),
-        layer("obj"),
-        "attack",
-        {
-          dir: mpos.sub(warriorLocation).unit(),
-        },
+  wait(0.5, () => {
+    const round = add([
+      text(`Round ${roundNumber}`),
+      pos(width() / 2, height() / 2),
+      scale(2),
+      origin("center"),
+      layer("ui"),
+    ]);
+    wait(1.5, () => {
+      destroy(round);
+      const fight = add([
+        text(`FIGHT`),
+        pos(width() / 2, height() / 2),
+        scale(2),
+        origin("center"),
+        layer("ui"),
       ]);
-      attackIsNotCooldown = false;
-      attack.play("attack");
-      wait(0.4, () => {
-        destroy(attack);
-      });
-      resetAttackCooldown();
-    }
-  });
+      wait(1, () => {
+        destroy(fight);
 
-  function resetAttackCooldown() {
-    if (attackIsNotCooldown) {
-      wait(ATTACK_SPEED, () => {
-        attackIsNotCooldown = true;
-      });
-    }
-    if (attackIsNotCooldown === false) {
-      wait(ATTACK_SPEED, () => {
-        attackIsNotCooldown = true;
-      });
-    }
-  }
+        GOBLIN_SPEED = GOBLIN_SPEED + 5;
+        GOBLIN_HEALTH = GOBLIN_HEALTH * 1.3;
+        GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.1;
+        SPAWN_RATE = SPAWN_RATE - 0.01;
 
-  action("attack", (s) => {
-    s.move(s.dir.scale(ATTACK_RANGE));
-  });
+        abilityPoints = 0;
+        renderAbilityPoints(abilityPoints);
 
-  //ATTACK HITS GOBLIN
-  overlaps("goblin", "attack", (goblin) => {
-    goblin.health = goblin.health - warrior.damage;
-    goblin.color = { r: 1, g: 0, b: 0, a: 1 };
-    wait(1, () => {
-      goblin.color = { r: 1, g: 1, b: 1, a: 1 };
-    });
-    if (goblin.health <= 0) {
-      score.text++;
-      destroy(goblin);
-      add([
-        sprite("splat"),
-        pos(goblin.pos.x - 10, goblin.pos.y + 10),
-        scale(0.05),
-        color(1, 1, 1, 0.5),
-        layer("background"),
-      ]);
-      killCount++;
-    }
+        let killCount = -1;
+        let totalEnemies = 1;
 
-    if (killCount === enemyCount) {
-      endRound(
-        WARRIOR_HEALTH,
-        ATTACK_DAMAGE,
-        ATTACK_SPEED,
-        ATTACK_RANGE,
-        WARRIOR_SPEED,
-        DASH_DISTANCE
-      );
-    }
-  });
+        // EXTRA UI I MAY USE LATER//
+        //
+        // const damagenum = add([
+        //   text(ATTACK_DAMAGE),
+        //   pos(width() - 250, 95),
+        //   layer("ui"),
+        //   scale(3),
+        // ]);
+        // const attackspeednum = add([
+        //   text(ATTACK_SPEED),
+        //   pos(width() - 250, 145),
+        //   layer("ui"),
+        //   scale(3),
+        // ]);
+        // const attackrangenum = add([
+        //   text(ATTACK_RANGE),
+        //   pos(width() - 250, 195),
+        //   layer("ui"),
+        //   scale(3),
+        // ]);
+        // const movementspeednum = add([
+        //   text(WARRIOR_SPEED),
+        //   pos(width() - 250, 245),
+        //   layer("ui"),
+        //   scale(3),
+        // ]);
+        // const dashnum = add([
+        //   text(DASH_DISTANCE),
+        //   pos(width() - 250, 295),
+        //   layer("ui"),
+        //   scale(3),
+        // ]);
 
-  warrior.action(() => {
-    warrior.pushOutAll();
-  });
+        //PLAYER ACTIONS//
 
-  //
-  //
-  //
-  //
-  //WARRIOR HEALTH
-  hitanim = 0.3;
-  warrior.overlaps("goblin", () => {
-    warrior.health = warrior.health - GOBLIN_DAMAGE;
-    warrior.color = { r: 1, g: 0, b: 0, a: 1 };
-    wait(hitanim, () => {
-      warrior.color = { r: 1, g: 1, b: 1, a: 0.8 };
-      wait(hitanim, () => {
-        warrior.color = { r: 1, g: 0, b: 0, a: 1 };
-        wait(hitanim, () => {
-          warrior.color = { r: 1, g: 1, b: 1, a: 0.8 };
+        // LEFT MOVEMENT
+        keyPress("a", () => {
+          warrior.changeSprite("warriorLeft", { animSpeed: 0.1, frame: 0 });
+          warrior.play("walk");
+        });
+        keyDown("a", () => {
+          warrior.move(-WARRIOR_SPEED, 0);
+        });
+        keyRelease("a", () => {
+          warrior.play("idle");
+          warrior.move(0, 0);
+        });
+
+        // DOWN MOVEMENT
+        keyPress("s", () => {
+          warrior.changeSprite("warriorDown", { animSpeed: 0.1, frame: 0 });
+          warrior.play("walk");
+        });
+        keyDown("s", () => {
+          warrior.move(0, WARRIOR_SPEED);
+        });
+        keyRelease("s", () => {
+          warrior.play("idle");
+          warrior.move(0, 0);
+        });
+
+        // RIGHT MOVEMENT
+        keyPress("d", () => {
+          warrior.changeSprite("warriorRight", { animSpeed: 0.1, frame: 0 });
+          warrior.play("walk");
+        });
+        keyDown("d", () => {
+          warrior.move(WARRIOR_SPEED, 0);
+        });
+        keyRelease("d", () => {
+          warrior.play("idle");
+          warrior.move(0, 0);
+        });
+
+        // UP MOVEMENT
+        keyPress("w", () => {
+          warrior.changeSprite("warriorUp", { animSpeed: 0.1, frame: 0 });
+          warrior.play("walk");
+        });
+        keyDown("w", () => {
+          warrior.move(0, -WARRIOR_SPEED);
+        });
+        keyRelease("w", () => {
+          warrior.play("idle");
+          warrior.move(0, 0);
+        });
+
+        //
+        //
+        //
+        //
+        //WARRIOR DASH
+
+        let dashIsNotCooldown = true;
+        keyPress("space", () => {
+          if (dashIsNotCooldown) {
+            WARRIOR_SPEED = WARRIOR_SPEED * DASH_DISTANCE;
+            dashIsNotCooldown = false;
+            wait(0.08, () => {
+              WARRIOR_SPEED = WARRIOR_SPEED / DASH_DISTANCE;
+              resetDashCooldown();
+            });
+          }
+        });
+        function resetDashCooldown() {
+          if (dashIsNotCooldown) {
+            wait(2, () => {
+              dashIsNotCooldown = true;
+            });
+          }
+          if (dashIsNotCooldown === false) {
+            wait(2, () => {
+              dashIsNotCooldown = true;
+            });
+          }
+        }
+
+        //
+        //
+        //
+        //
+        //WARRIOR ATTACK
+        let attackIsNotCooldown = true;
+        mouseClick(() => {
+          const warriorLocation = warrior.pos.add(-20, 0);
+          const mpos = mousePos();
+          if (attackIsNotCooldown) {
+            const attack = add([
+              sprite("attack", { animSpeed: 0.05, frame: 0 }),
+              pos(warrior.pos.add(-25, -20)),
+              scale(0.3),
+              layer("obj"),
+              "attack",
+              {
+                dir: mpos.sub(warriorLocation).unit(),
+              },
+            ]);
+            attackIsNotCooldown = false;
+            attack.play("attack");
+            wait(0.4, () => {
+              destroy(attack);
+            });
+            resetAttackCooldown();
+          }
+        });
+
+        function resetAttackCooldown() {
+          if (attackIsNotCooldown) {
+            wait(ATTACK_SPEED, () => {
+              attackIsNotCooldown = true;
+            });
+          }
+          if (attackIsNotCooldown === false) {
+            wait(ATTACK_SPEED, () => {
+              attackIsNotCooldown = true;
+            });
+          }
+        }
+
+        action("attack", (s) => {
+          s.move(s.dir.scale(ATTACK_RANGE));
+        });
+
+        //ATTACK HITS GOBLIN
+        overlaps("goblin", "attack", (goblin) => {
+          goblin.health = goblin.health - warrior.damage;
+          goblin.color = { r: 1, g: 0, b: 0, a: 1 };
+          wait(1, () => {
+            goblin.color = { r: 1, g: 1, b: 1, a: 1 };
+          });
+          if (goblin.health <= 0) {
+            score.text++;
+            destroy(goblin);
+            add([
+              sprite("splat"),
+              pos(goblin.pos.x - 10, goblin.pos.y + 10),
+              scale(0.05),
+              color(1, 1, 1, 0.5),
+              layer("background"),
+            ]);
+            killCount++;
+            console.log("KILLCOUNT", killCount);
+            console.log("ENEMYCOUNT", enemyCount);
+            console.log("TOTAL ENEMIES", totalEnemies);
+          }
+
+          if (killCount >= enemyCount) {
+            add([
+              text("ROUND COMPLETE!"),
+              pos(width() / 2, height() / 2),
+              origin("center"),
+            ]);
+            let scoreNum = score.text;
+            console.log(scoreNum);
+
+            wait(2, () => {
+              endRound(
+                WARRIOR_HEALTH,
+                ATTACK_DAMAGE,
+                ATTACK_SPEED,
+                ATTACK_RANGE,
+                WARRIOR_SPEED,
+                DASH_DISTANCE,
+                scoreNum,
+                roundNumber
+              );
+            });
+          }
+        });
+
+        warrior.action(() => {
+          warrior.pushOutAll();
+        });
+
+        //
+        //
+        //
+        //
+        //WARRIOR HEALTH
+        hitanim = 0.3;
+        warrior.overlaps("goblin", () => {
+          warrior.health = warrior.health - GOBLIN_DAMAGE;
+          warrior.color = { r: 1, g: 0, b: 0, a: 1 };
           wait(hitanim, () => {
-            warrior.color = { r: 1, g: 0, b: 0, a: 1 };
+            warrior.color = { r: 1, g: 1, b: 1, a: 0.8 };
             wait(hitanim, () => {
-              warrior.color = { r: 1, g: 1, b: 1, a: 0.8 };
+              warrior.color = { r: 1, g: 0, b: 0, a: 1 };
               wait(hitanim, () => {
-                warrior.color = { r: 1, g: 0, b: 0, a: 1 };
+                warrior.color = { r: 1, g: 1, b: 1, a: 0.8 };
                 wait(hitanim, () => {
-                  warrior.color = { r: 1, g: 1, b: 1, a: 0.8 };
+                  warrior.color = { r: 1, g: 0, b: 0, a: 1 };
                   wait(hitanim, () => {
-                    warrior.color = { r: 1, g: 0, b: 0, a: 1 };
+                    warrior.color = { r: 1, g: 1, b: 1, a: 0.8 };
                     wait(hitanim, () => {
-                      warrior.color = { r: 1, g: 1, b: 1, a: 1 };
+                      warrior.color = { r: 1, g: 0, b: 0, a: 1 };
+                      wait(hitanim, () => {
+                        warrior.color = { r: 1, g: 1, b: 1, a: 0.8 };
+                        wait(hitanim, () => {
+                          warrior.color = { r: 1, g: 0, b: 0, a: 1 };
+                          wait(hitanim, () => {
+                            warrior.color = { r: 1, g: 1, b: 1, a: 1 };
+                          });
+                        });
+                      });
                     });
                   });
                 });
               });
             });
           });
+
+          healthnum.text = warrior.health;
+          if (healthnum.text < 100) {
+            healthnum.pos.x = width() - 215;
+          }
+          if (healthnum.text <= 0) {
+            destroy(warrior);
+            window.score(score.text);
+          }
         });
-      });
-    });
 
-    healthnum.text = warrior.health;
-    if (healthnum.text < 100) {
-      healthnum.pos.x = width() - 215;
-    }
-    if (healthnum.text === 0) {
-      destroy(warrior);
-      window.score(score.text);
-    }
-  });
+        //
+        //
+        //
+        //
+        //ENEMY ACTIONS
 
-  //
-  //
-  //
-  //
-  //ENEMY ACTIONS
+        function spawnGoblin() {
+          let goblinSpawn = Math.round(rand(0, 3));
+          //GOBLIN SPAWN FAR LEFT
+          if (goblinSpawn === 0) {
+            const goblin1 = add([
+              sprite("goblin", { animSpeed: 0.5, frame: 0 }),
+              pos(-100, rand(-100, height())),
+              scale(0.5),
+              color(1, 1, 1, 1),
+              layer("obj"),
+              "goblin",
+              {
+                health: GOBLIN_HEALTH,
+              },
+            ]);
+            goblin1.play("goblin1");
+          }
 
-  function spawnGoblin() {
-    let goblinSpawn = Math.round(rand(0, 3));
-    //GOBLIN SPAWN FAR LEFT
-    if (goblinSpawn === 0) {
-      const goblin1 = add([
-        sprite("goblin", { animSpeed: 0.5, frame: 0 }),
-        pos(-100, rand(-100, height())),
-        scale(0.5),
-        color(1, 1, 1, 1),
-        layer("obj"),
-        "goblin",
-        {
-          health: GOBLIN_HEALTH,
-        },
-      ]);
-      goblin1.play("goblin1");
-    }
+          //GOBLIN SPAWN FAR RIGHT
+          if (goblinSpawn === 1) {
+            const goblin2 = add([
+              sprite("goblin", { animSpeed: 0.5, frame: 0 }),
+              pos(width(), rand(-100, height())),
+              scale(0.5),
+              color(1, 1, 1, 1),
+              layer("obj"),
+              "goblin",
+              {
+                health: GOBLIN_HEALTH,
+              },
+            ]);
+            goblin2.play("goblin2");
+          }
 
-    //GOBLIN SPAWN FAR RIGHT
-    if (goblinSpawn === 1) {
-      const goblin2 = add([
-        sprite("goblin", { animSpeed: 0.5, frame: 0 }),
-        pos(width(), rand(-100, height())),
-        scale(0.5),
-        color(1, 1, 1, 1),
-        layer("obj"),
-        "goblin",
-        {
-          health: GOBLIN_HEALTH,
-        },
-      ]);
-      goblin2.play("goblin2");
-    }
+          //GOBLIN SPAWN TOP
+          if (goblinSpawn === 2) {
+            const goblin3 = add([
+              sprite("goblin", { animSpeed: 0.5, frame: 0 }),
+              pos(rand(-100, width()), -100),
+              scale(0.5),
+              color(1, 1, 1, 1),
+              layer("obj"),
+              "goblin",
+              {
+                health: GOBLIN_HEALTH,
+              },
+            ]);
+            goblin3.play("goblin3");
+          }
 
-    //GOBLIN SPAWN TOP
-    if (goblinSpawn === 2) {
-      const goblin3 = add([
-        sprite("goblin", { animSpeed: 0.5, frame: 0 }),
-        pos(rand(-100, width()), -100),
-        scale(0.5),
-        color(1, 1, 1, 1),
-        layer("obj"),
-        "goblin",
-        {
-          health: GOBLIN_HEALTH,
-        },
-      ]);
-      goblin3.play("goblin3");
-    }
+          //GOBLIN SPAWN BOTTOM
 
-    //GOBLIN SPAWN BOTTOM
+          if (goblinSpawn === 3) {
+            const goblin4 = add([
+              sprite("goblin", { animSpeed: 0.5, frame: 0 }),
+              pos(rand(-100, width()), height()),
+              scale(0.5),
+              color(1, 1, 1, 1),
+              layer("obj"),
+              "goblin",
+              {
+                health: GOBLIN_HEALTH,
+              },
+            ]);
+            goblin4.play("goblin4");
+          }
+          if (enemyCount >= totalEnemies)
+            wait(SPAWN_RATE, () => {
+              totalEnemies++;
+              spawnGoblin();
+            });
+        }
 
-    if (goblinSpawn === 3) {
-      const goblin4 = add([
-        sprite("goblin", { animSpeed: 0.5, frame: 0 }),
-        pos(rand(-100, width()), height()),
-        scale(0.5),
-        color(1, 1, 1, 1),
-        layer("obj"),
-        "goblin",
-        {
-          health: GOBLIN_HEALTH,
-        },
-      ]);
-      goblin4.play("goblin4");
-    }
-    if (enemyCount <= totalEnemies)
-      wait(SPAWN_RATE, () => {
-        enemyCount++;
+        action("goblin", (goblin) => {
+          if (warrior.pos.x < goblin.pos.x && warrior.pos.y < goblin.pos.y) {
+            wait(GOBLIN_REACTION, () => {
+              goblin.move(
+                rand(-GOBLIN_SPEED, -GOBLIN_SPEED / 10),
+                rand(-GOBLIN_SPEED / 10, -GOBLIN_SPEED)
+              );
+            });
+          }
+          if (warrior.pos.x > goblin.pos.x && warrior.pos.y > goblin.pos.y) {
+            wait(GOBLIN_REACTION, () => {
+              goblin.move(
+                rand(GOBLIN_SPEED, GOBLIN_SPEED / 10),
+                rand(GOBLIN_SPEED / 10, GOBLIN_SPEED)
+              );
+            });
+          }
+          if (warrior.pos.y > goblin.pos.y && warrior.pos.x < goblin.pos.x) {
+            wait(GOBLIN_REACTION, () => {
+              goblin.move(
+                rand(-GOBLIN_SPEED, -GOBLIN_SPEED / 10),
+                rand(GOBLIN_SPEED / 10, GOBLIN_SPEED)
+              );
+            });
+          }
+          if (warrior.pos.y < goblin.pos.y && warrior.pos.x > goblin.pos.x) {
+            wait(GOBLIN_REACTION, () => {
+              goblin.move(
+                rand(GOBLIN_SPEED, GOBLIN_SPEED / 10),
+                rand(-GOBLIN_SPEED / 10, -GOBLIN_SPEED)
+              );
+            });
+          }
+        });
+
         spawnGoblin();
       });
-  }
-
-  action("goblin", (goblin) => {
-    if (warrior.pos.x < goblin.pos.x && warrior.pos.y < goblin.pos.y) {
-      wait(GOBLIN_REACTION, () => {
-        goblin.move(
-          rand(-GOBLIN_SPEED, -GOBLIN_SPEED / 10),
-          rand(-GOBLIN_SPEED / 10, -GOBLIN_SPEED)
-        );
-      });
-    }
-    if (warrior.pos.x > goblin.pos.x && warrior.pos.y > goblin.pos.y) {
-      wait(GOBLIN_REACTION, () => {
-        goblin.move(
-          rand(GOBLIN_SPEED, GOBLIN_SPEED / 10),
-          rand(GOBLIN_SPEED / 10, GOBLIN_SPEED)
-        );
-      });
-    }
-    if (warrior.pos.y > goblin.pos.y && warrior.pos.x < goblin.pos.x) {
-      wait(GOBLIN_REACTION, () => {
-        goblin.move(
-          rand(-GOBLIN_SPEED, -GOBLIN_SPEED / 10),
-          rand(GOBLIN_SPEED / 10, GOBLIN_SPEED)
-        );
-      });
-    }
-    if (warrior.pos.y < goblin.pos.y && warrior.pos.x > goblin.pos.x) {
-      wait(GOBLIN_REACTION, () => {
-        goblin.move(
-          rand(GOBLIN_SPEED, GOBLIN_SPEED / 10),
-          rand(-GOBLIN_SPEED / 10, -GOBLIN_SPEED)
-        );
-      });
-    }
+    });
   });
-
-  spawnGoblin();
 });
 
 go("game", 0);
