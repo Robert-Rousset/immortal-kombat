@@ -40,7 +40,7 @@ export default function Profile() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(submitButton);
+    let center = document.querySelector(".center");
 
     if (submitButton === "Login") {
       try {
@@ -73,6 +73,7 @@ export default function Profile() {
         password: "",
       });
     }
+    center.setAttribute("class", "getOut");
   };
 
   function logout() {
@@ -91,20 +92,22 @@ export default function Profile() {
             type="email"
             value={formState.email}
             onChange={handleChange}
+            className="login-input"
           ></input>
           <input
+            className="login-input"
             placeholder="Password"
             name="password"
             type="password"
             value={formState.password}
             onChange={handleChange}
           ></input>
-          <button className="button" type="submit">
+          <button className="button login-button" type="submit">
             {submitButton}
           </button>
         </form>
 
-        <p>
+        <p className="login-info">
           {loginOrSignup}{" "}
           <button
             className="signup"

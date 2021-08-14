@@ -5,7 +5,7 @@ export default function UpdateStats() {
   function nextRound() {
     let thisStatsBox = document.querySelector(".statflex");
     let scorenum = Number(document.querySelector("#score").innerHTML);
-    console.log(scorenum);
+
     thisStatsBox.setAttribute("class", "stats-hidden");
 
     window.go("game", scorenum);
@@ -529,7 +529,7 @@ export default function UpdateStats() {
             </div>
 
             <div className="each-stat-container">
-              <h4>Dash Distance </h4>
+              <h4>Dash Speed</h4>
               <div className="stat">
                 <div>
                   <p id="dash">0</p>

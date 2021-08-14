@@ -41,7 +41,7 @@ h1 {
 }
 h2 {
   font-size: 6rem;
-  color: rgb(190, 136, 37, 0.5);
+  color: rgb(190, 136, 37, 0.8);
   font-family: "MedievalSharp", cursive;
   display: flex;
   align-items: center;
@@ -81,7 +81,8 @@ h5 {
   align-items: center;
   justify-content: center;
   margin: auto;
-  position: relative;
+  width: 100%;
+  position: absolute;
   height: 95vh;
   padding-bottom: 5rem;
   transition: all 1s ease-in-out;
@@ -159,9 +160,9 @@ h5 {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 20px;
-  padding: 20px;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding: 30px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,6 +172,31 @@ h5 {
   bottom: 300px;
   opacity: 1;
   transition: ease-in-out 2s;
+}
+.login-container::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  background-image: url(./img/smoke.jpg);
+  background-size: 250%;
+  background-position: top center;
+  opacity: 0.7;
+  border-radius: 20px;
+  z-index: 1;
+  box-shadow: inset black 0px 0px 50px, inset black 10px 10px 20px,
+    inset -10px -10px 20px black;
+}
+.login-input {
+  z-index: 2;
+}
+.login-button {
+  z-index: 2;
+}
+.login-info {
+  z-index: 2;
 }
 
 form {
@@ -216,7 +242,6 @@ input:focus {
   padding: 5px;
   z-index: 100;
 }
-
 .scoreboard-container {
   position: absolute;
   width: 100%;
@@ -237,24 +262,20 @@ input:focus {
   margin-top: 20px;
   border-radius: 20px;
 }
-
 .score-input {
   width: 30%;
 }
-
 .scores {
   box-sizing: border-box;
   color: white;
   display: flex;
   justify-content: space-between;
-
   font-family: "Roboto", sans-serif;
   background-color: rgb(139, 139, 139, 0.2);
   padding: 10px;
   padding-right: 20px;
   padding-left: 20px;
 }
-
 .score-definitions {
   background-color: rgb(161, 161, 161);
   font-family: "Roboto", sans-serif;
@@ -269,8 +290,12 @@ input:focus {
 .submit-hidden,
 .score-hidden,
 .hidden,
-.stats-hidden {
+.stats-hidden,
+.getOut {
   display: none;
+  position: absolute;
+  left: -1000px;
+  height: 0%;
 }
 
 .statflex {
@@ -281,26 +306,42 @@ input:focus {
   width: 100%;
   height: 100vh;
 }
-
 .stats-box {
   width: 1200px;
   padding: 2rem;
   position: absolute;
   background-color: rgb(0, 0, 0, 0.5);
-  box-shadow: inset rgb(5, 0, 0) 0px 0px 100px,
+  box-shadow: inset rgb(5, 0, 0) 0px 0px 500px,
     0px 0px 100px rgba(92, 92, 92, 0.5);
   border-radius: 50px;
   backdrop-filter: blur(2px);
 }
+.stats-box::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  background-image: url(./img/kewwwl.jpg);
+  background-size: cover;
+  background-position: top center;
+  opacity: 0.2;
+  border-radius: 50px;
+  z-index: 1;
+  box-shadow: inset black 0px 0px 100px;
+}
 .each-stat-container {
+  position: relative;
   width: 100%;
   height: 100%;
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgb(0, 0, 0, 0.8);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 50px;
   border-bottom-left-radius: 50px;
   box-shadow: inset rgba(112, 7, 7, 0.2) 0px 0px 50px;
+  z-index: 10;
 }
 .each-stat-container:hover {
   background-color: rgba(255, 136, 0, 0.1);
@@ -314,8 +355,9 @@ input:focus {
 }
 .next-round {
   margin-top: 20px;
+  position: relative;
+  z-index: 10;
 }
-
 .stat {
   display: flex;
   justify-content: center;
@@ -328,7 +370,6 @@ input:focus {
   box-shadow: rgb(0, 0, 0, 0.7) 0px 5px 5px;
   flex-wrap: wrap;
 }
-
 .container {
   display: flex;
   align-items: center;
@@ -337,7 +378,6 @@ input:focus {
 .column {
   margin: 20px;
 }
-
 .ability-point-box {
   display: flex;
   justify-content: center;
@@ -388,7 +428,6 @@ input:focus {
   line-height: 10px;
   box-shadow: inset rgb(5, 3, 3) 0px 1px 10px, 0px 5px 5px rgb(5, 3, 3, 0.2);
 }
-
 .upgrade-stat:hover {
   background-color: var(--primary);
   transition: ease-in-out 0.5s;
@@ -397,7 +436,6 @@ input:focus {
   background-color: var(--primary);
   transition: ease-in-out 0.5s;
 }
-
 #health,
 #attack-damage,
 #attack-speed,

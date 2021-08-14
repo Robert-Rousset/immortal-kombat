@@ -4,8 +4,13 @@ const k = kaboom({
   debug: true,
   scale: 1,
   crisp: true,
+  clearColor: [0, 0, 0, 1],
 });
-
+add([
+  text("Login or Signup! Then press Space to begin!"),
+  pos(width() / 2, height() / 2 - 200),
+  origin("center"),
+]);
 loadSprite("background", "./img/battleground.jpg");
 
 //
@@ -135,8 +140,9 @@ let WARRIOR_HEALTH = 10;
 let ATTACK_DAMAGE = 2;
 let ATTACK_SPEED = 1;
 let ATTACK_RANGE = 200;
-let WARRIOR_SPEED = 220;
+let WARRIOR_SPEED = 160;
 let DASH_DISTANCE = 4;
+let DASH_COOLDOWN = 2;
 
 //HEALTH INCREASES
 function increaseHealth() {
@@ -229,7 +235,7 @@ function increaseAttackRange() {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
-    ATTACK_RANGE = ATTACK_RANGE + 25;
+    ATTACK_RANGE = ATTACK_RANGE + 30;
     attackRangeStat.innerHTML = ` ${ATTACK_RANGE}`;
     abilityPoints++;
     rangePoints++;
@@ -238,11 +244,11 @@ function increaseAttackRange() {
   }
 }
 function decreaseAttackRange() {
-  if (ATTACK_RANGE <= 250 || abilityPoints <= 0) {
+  if (ATTACK_RANGE <= 200 || abilityPoints <= 0) {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
-    ATTACK_RANGE = ATTACK_RANGE - 25;
+    ATTACK_RANGE = ATTACK_RANGE - 30;
     attackRangeStat.innerHTML = ` ${ATTACK_RANGE}`;
     abilityPoints--;
     rangePoints--;
@@ -257,7 +263,7 @@ function increaseWarriorSpeed() {
     return;
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
-    WARRIOR_SPEED = WARRIOR_SPEED + 20;
+    WARRIOR_SPEED = WARRIOR_SPEED + 35;
     movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
     abilityPoints++;
     movementPoints++;
@@ -266,11 +272,11 @@ function increaseWarriorSpeed() {
   }
 }
 function decreaseWarriorSpeed() {
-  if (WARRIOR_SPEED >= 250 || abilityPoints <= 0) {
+  if (WARRIOR_SPEED <= 160 || abilityPoints <= 0) {
     return;
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
-    WARRIOR_SPEED = WARRIOR_SPEED - 20;
+    WARRIOR_SPEED = WARRIOR_SPEED - 35;
     movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
     abilityPoints--;
     movementPoints--;
@@ -286,6 +292,7 @@ function increaseDashDistance() {
   } else {
     let dashStat = document.querySelector("#dash");
     DASH_DISTANCE = DASH_DISTANCE + 1;
+    DASH_COOLDOWN = DASH_COOLDOWN - 0.1;
     dashStat.innerHTML = `${DASH_DISTANCE}`;
     abilityPoints++;
     dashPoints++;
@@ -299,6 +306,7 @@ function decreaseDashDistance() {
   } else {
     let dashStat = document.querySelector("#dash");
     DASH_DISTANCE = DASH_DISTANCE - 1;
+    DASH_COOLDOWN = DASH_COOLDOWN + 0.1;
     dashStat.innerHTML = `${DASH_DISTANCE}`;
     abilityPoints--;
     dashPoints--;
@@ -313,7 +321,7 @@ function decreaseDashDistance() {
 //ENEMY STATS
 let GOBLIN_SPEED = 200;
 let GOBLIN_HEALTH = 2;
-let GOBLIN_DAMAGE = 0;
+let GOBLIN_DAMAGE = 0.4;
 let SPAWN_RATE = 0.6;
 let GOBLIN_REACTION = 0.2;
 
@@ -325,12 +333,13 @@ let GOBLIN_REACTION = 0.2;
 let enemyCount = 5;
 
 function increaseEnemies() {
-  enemyCount = Math.round(enemyCount * 1.3);
+  enemyCount = Math.round(enemyCount * 1.1);
   roundNumber++;
 }
 
 scene("game", (scoreNumber) => {
   //SETUP
+  let movementAllowed = false;
   origin("center");
   layers([("background", "obj", "ui"), "obj"]);
   const score = add([
@@ -350,6 +359,7 @@ scene("game", (scoreNumber) => {
   ]);
   const warrior = add([
     sprite("warriorDown"),
+    area(vec2(6), vec2(24)),
     pos(width() / 2, height() / 2),
     scale(0.15),
     color(rgba(1, 1, 1, 1)),
@@ -370,7 +380,7 @@ scene("game", (scoreNumber) => {
   health.play("pump");
   const healthnum = add([
     text(warrior.health),
-    pos(width() - 200, 45),
+    pos(width() - 300, 45),
     layer("ui"),
     scale(3),
   ]);
@@ -394,11 +404,12 @@ scene("game", (scoreNumber) => {
       ]);
       wait(1, () => {
         destroy(fight);
+        movementAllowed = true;
 
-        GOBLIN_SPEED = GOBLIN_SPEED + 5;
-        GOBLIN_HEALTH = GOBLIN_HEALTH * 1.3;
+        GOBLIN_SPEED = GOBLIN_SPEED + 6;
+        GOBLIN_HEALTH = GOBLIN_HEALTH * 1.4;
         GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.1;
-        SPAWN_RATE = SPAWN_RATE - 0.01;
+        SPAWN_RATE = SPAWN_RATE - 0.005;
 
         abilityPoints = 0;
         renderAbilityPoints(abilityPoints);
@@ -442,56 +453,75 @@ scene("game", (scoreNumber) => {
         //PLAYER ACTIONS//
 
         // LEFT MOVEMENT
-        keyPress("a", () => {
-          warrior.changeSprite("warriorLeft", { animSpeed: 0.1, frame: 0 });
-          warrior.play("walk");
-        });
-        keyDown("a", () => {
-          warrior.move(-WARRIOR_SPEED, 0);
-        });
-        keyRelease("a", () => {
-          warrior.play("idle");
-          warrior.move(0, 0);
-        });
+        function allowMovement() {
+          if (movementAllowed === true) {
+            keyPress("a", () => {
+              warrior.changeSprite("warriorLeft", { animSpeed: 0.1, frame: 0 });
+              warrior.play("walk");
+            });
+            if (movementAllowed) {
+              keyDown("a", () => {
+                warrior.move(-WARRIOR_SPEED, 0);
+              });
+            }
+            keyRelease("a", () => {
+              warrior.play("idle");
+              warrior.move(0, 0);
+            });
 
-        // DOWN MOVEMENT
-        keyPress("s", () => {
-          warrior.changeSprite("warriorDown", { animSpeed: 0.1, frame: 0 });
-          warrior.play("walk");
-        });
-        keyDown("s", () => {
-          warrior.move(0, WARRIOR_SPEED);
-        });
-        keyRelease("s", () => {
-          warrior.play("idle");
-          warrior.move(0, 0);
-        });
+            // DOWN MOVEMENT
 
-        // RIGHT MOVEMENT
-        keyPress("d", () => {
-          warrior.changeSprite("warriorRight", { animSpeed: 0.1, frame: 0 });
-          warrior.play("walk");
-        });
-        keyDown("d", () => {
-          warrior.move(WARRIOR_SPEED, 0);
-        });
-        keyRelease("d", () => {
-          warrior.play("idle");
-          warrior.move(0, 0);
-        });
+            keyPress("s", () => {
+              warrior.changeSprite("warriorDown", { animSpeed: 0.1, frame: 0 });
+              warrior.play("walk");
+            });
+            if (movementAllowed) {
+              keyDown("s", () => {
+                warrior.move(0, WARRIOR_SPEED);
+              });
+            }
+            keyRelease("s", () => {
+              warrior.play("idle");
+              warrior.move(0, 0);
+            });
 
-        // UP MOVEMENT
-        keyPress("w", () => {
-          warrior.changeSprite("warriorUp", { animSpeed: 0.1, frame: 0 });
-          warrior.play("walk");
-        });
-        keyDown("w", () => {
-          warrior.move(0, -WARRIOR_SPEED);
-        });
-        keyRelease("w", () => {
-          warrior.play("idle");
-          warrior.move(0, 0);
-        });
+            // RIGHT MOVEMENT
+            keyPress("d", () => {
+              warrior.changeSprite("warriorRight", {
+                animSpeed: 0.1,
+                frame: 0,
+              });
+              warrior.play("walk");
+            });
+            if (movementAllowed) {
+              keyDown("d", () => {
+                warrior.move(WARRIOR_SPEED, 0);
+              });
+            }
+            keyRelease("d", () => {
+              warrior.play("idle");
+              warrior.move(0, 0);
+            });
+
+            // UP MOVEMENT
+            keyPress("w", () => {
+              warrior.changeSprite("warriorUp", { animSpeed: 0.1, frame: 0 });
+              warrior.play("walk");
+            });
+            if (movementAllowed) {
+              keyDown("w", () => {
+                console.log("keyispress");
+                warrior.move(0, -WARRIOR_SPEED);
+              });
+            }
+            keyRelease("w", () => {
+              warrior.play("idle");
+              warrior.move(0, 0);
+            });
+          } else {
+            return;
+          }
+        }
 
         //
         //
@@ -512,12 +542,12 @@ scene("game", (scoreNumber) => {
         });
         function resetDashCooldown() {
           if (dashIsNotCooldown) {
-            wait(2, () => {
+            wait(DASH_COOLDOWN, () => {
               dashIsNotCooldown = true;
             });
           }
           if (dashIsNotCooldown === false) {
-            wait(2, () => {
+            wait(DASH_COOLDOWN, () => {
               dashIsNotCooldown = true;
             });
           }
@@ -530,6 +560,7 @@ scene("game", (scoreNumber) => {
         //WARRIOR ATTACK
         let attackIsNotCooldown = true;
         mouseClick(() => {
+          warrior.move(0, 0);
           const warriorLocation = warrior.pos.add(-20, 0);
           const mpos = mousePos();
           if (attackIsNotCooldown) {
@@ -572,11 +603,21 @@ scene("game", (scoreNumber) => {
         //ATTACK HITS GOBLIN
         overlaps("goblin", "attack", (goblin) => {
           goblin.health = goblin.health - warrior.damage;
+          const hitMarker = add([
+            text(Math.round(warrior.damage)),
+            pos(goblin.pos.x + 20, goblin.pos.y + 20),
+          ]);
+          hitMarker.on("update", () => {
+            hitMarker.move(-10, -10);
+          });
+
           goblin.color = { r: 1, g: 0, b: 0, a: 1 };
           wait(1, () => {
             goblin.color = { r: 1, g: 1, b: 1, a: 1 };
+            destroy(hitMarker);
           });
           if (goblin.health <= 0) {
+            camShake(2);
             score.text++;
             destroy(goblin);
             add([
@@ -587,9 +628,6 @@ scene("game", (scoreNumber) => {
               layer("background"),
             ]);
             killCount++;
-            console.log("KILLCOUNT", killCount);
-            console.log("ENEMYCOUNT", enemyCount);
-            console.log("TOTAL ENEMIES", totalEnemies);
           }
 
           if (killCount >= enemyCount) {
@@ -599,8 +637,7 @@ scene("game", (scoreNumber) => {
               origin("center"),
             ]);
             let scoreNum = score.text;
-            console.log(scoreNum);
-
+            movementAllowed = false;
             wait(2, () => {
               endRound(
                 WARRIOR_HEALTH,
@@ -657,10 +694,7 @@ scene("game", (scoreNumber) => {
             });
           });
 
-          healthnum.text = warrior.health;
-          if (healthnum.text < 100) {
-            healthnum.pos.x = width() - 215;
-          }
+          healthnum.text = Math.round(warrior.health * 10) / 10;
           if (healthnum.text <= 0) {
             destroy(warrior);
             window.score(score.text);
@@ -782,9 +816,12 @@ scene("game", (scoreNumber) => {
         });
 
         spawnGoblin();
+        allowMovement();
       });
     });
   });
 });
 
-go("game", 0);
+keyPress("space", () => {
+  go("game", 0);
+});

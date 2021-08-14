@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/tech-friends',
+  process.env.MONGODB_URI || "mongodb://localhost/immortal-kombat",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
