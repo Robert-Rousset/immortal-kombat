@@ -349,7 +349,7 @@ scene("game", (scoreNumber) => {
     layer("background"),
   ]);
   const warrior = add([
-    sprite("warriorRight"),
+    sprite("warriorDown"),
     pos(width() / 2, height() / 2),
     scale(0.15),
     color(rgba(1, 1, 1, 1)),
@@ -378,7 +378,7 @@ scene("game", (scoreNumber) => {
   wait(0.5, () => {
     const round = add([
       text(`Round ${roundNumber}`),
-      pos(width() / 2, height() / 2),
+      pos(width() / 2, height() / 2 - 100),
       scale(2),
       origin("center"),
       layer("ui"),
@@ -387,7 +387,7 @@ scene("game", (scoreNumber) => {
       destroy(round);
       const fight = add([
         text(`FIGHT`),
-        pos(width() / 2, height() / 2),
+        pos(width() / 2, height() / 2 - 100),
         scale(2),
         origin("center"),
         layer("ui"),
