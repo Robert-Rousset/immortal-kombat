@@ -259,6 +259,7 @@ input:focus {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  height: calc(100vh - 7vh);
 }
 .scoreboard {
   background-color: rgb(0, 0, 0, 0.8);

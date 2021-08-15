@@ -179,7 +179,7 @@ let roundNumber = 1;
 
 // WARRIOR STATS
 let WARRIOR_HEALTH = 10;
-let ATTACK_DAMAGE = 2;
+let ATTACK_DAMAGE = 3;
 let ATTACK_SPEED = 1;
 let ATTACK_RANGE = 200;
 let WARRIOR_SPEED = 150;
@@ -227,11 +227,11 @@ function resetStats() {
 
 //HEALTH INCREASES
 function increaseHealth() {
-  if (WARRIOR_HEALTH >= 70 || abilityPoints >= 3) {
+  if (WARRIOR_HEALTH >= 130 || abilityPoints >= 4) {
     return;
   } else {
     let healthStat = document.querySelector("#health");
-    WARRIOR_HEALTH = WARRIOR_HEALTH + 5;
+    WARRIOR_HEALTH = WARRIOR_HEALTH + 10;
     healthStat.innerHTML = ` ${WARRIOR_HEALTH}`;
     abilityPoints++;
     healthPoints++;
@@ -245,7 +245,7 @@ function decreaseHealth() {
     return;
   } else {
     let healthStat = document.querySelector("#health");
-    WARRIOR_HEALTH = WARRIOR_HEALTH - 5;
+    WARRIOR_HEALTH = WARRIOR_HEALTH - 10;
     healthStat.innerHTML = ` ${WARRIOR_HEALTH}`;
     abilityPoints--;
     healthPoints--;
@@ -256,11 +256,11 @@ function decreaseHealth() {
 
 //DAMAGE INCREASES
 function increaseDamage() {
-  if (ATTACK_DAMAGE >= 562.9 || abilityPoints >= 3) {
+  if (ATTACK_DAMAGE >= 10000 || abilityPoints >= 4) {
     return;
   } else {
     let damageStat = document.querySelector("#attack-damage");
-    ATTACK_DAMAGE = ATTACK_DAMAGE * 1.6;
+    ATTACK_DAMAGE = ATTACK_DAMAGE * 1.5;
     damageStat.innerHTML = ` ${Math.round(ATTACK_DAMAGE * 10) / 10}`;
     abilityPoints++;
     damagePoints++;
@@ -273,7 +273,7 @@ function decreaseDamage() {
     return;
   } else {
     let damageStat = document.querySelector("#attack-damage");
-    ATTACK_DAMAGE = ATTACK_DAMAGE / 1.6;
+    ATTACK_DAMAGE = ATTACK_DAMAGE / 1.5;
     damageStat.innerHTML = ` ${Math.round(ATTACK_DAMAGE * 10) / 10}`;
     abilityPoints--;
     damagePoints--;
@@ -284,7 +284,7 @@ function decreaseDamage() {
 
 //ATTACK SPEED INCREASES
 function increaseAttackSpeed() {
-  if (ATTACK_SPEED <= 0.15 || abilityPoints >= 3) {
+  if (ATTACK_SPEED <= 0.15 || abilityPoints >= 4) {
     return;
   } else {
     let attackSpeedStat = document.querySelector("#attack-speed");
@@ -312,7 +312,7 @@ function decreaseAttackSpeed() {
 
 //ATTACK RANGE INCREASES
 function increaseAttackRange() {
-  if (ATTACK_RANGE >= 1070 || abilityPoints >= 3) {
+  if (ATTACK_RANGE >= 1070 || abilityPoints >= 4) {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
@@ -340,7 +340,7 @@ function decreaseAttackRange() {
 
 // INCREASE WARRIOR SPEED
 function increaseWarriorSpeed() {
-  if (WARRIOR_SPEED >= 450 || abilityPoints >= 3) {
+  if (WARRIOR_SPEED >= 450 || abilityPoints >= 4) {
     return;
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
@@ -395,7 +395,7 @@ function decreaseWarriorSpeed() {
 // }
 
 function increaseBomb() {
-  if (BOMB_STAT >= 13 || abilityPoints >= 3) {
+  if (BOMB_STAT >= 13 || abilityPoints >= 4) {
     return;
   } else {
     let bombStat = document.querySelector("#bomb");
@@ -432,7 +432,7 @@ function decreaseBomb() {
 //
 //ENEMY STATS
 let GOBLIN_SPEED = 180;
-let GOBLIN_HEALTH = 1.3;
+let GOBLIN_HEALTH = 1.001;
 let GOBLIN_DAMAGE = 0.4;
 let SPAWN_RATE = 0.6;
 let GOBLIN_REACTION = 0.2;
@@ -448,10 +448,10 @@ let GOBLIN_REACTION = 0.2;
 //
 // GENERAL
 
-let enemyCount = 15;
+let enemyCount = 19;
 
 function increaseEnemies() {
-  enemyCount = Math.round(enemyCount * 1.25);
+  enemyCount = Math.round(enemyCount * 1.1);
   roundNumber++;
 }
 
@@ -496,7 +496,7 @@ scene("game", (scoreNumber) => {
   ]);
   const bombSprite = add([
     sprite("bomb", { animSpeed: 0.1, frame: 0 }),
-    pos(width() - 480, 5),
+    pos(width() - 530, 5),
     layer("ui"),
     scale(0.3),
   ]);
@@ -510,10 +510,24 @@ scene("game", (scoreNumber) => {
   ]);
   if (MAX_BOMBS > BOMB_COUNT) {
     BOMB_COUNT++;
+    const extraBomb = add([
+      text("+1 bomb!"),
+      pos(width() - 580, 100),
+      scale(2),
+    ]);
+    wait(2, () => {
+      destroy(extraBomb);
+    });
   }
+  const slash = add([
+    text("/" + Math.ceil(MAX_BOMBS)),
+    pos(width() - 400, 60),
+    layer("ui"),
+    scale(1.5),
+  ]);
   const bombnum = add([
     text(BOMB_COUNT),
-    pos(width() - 400, 45),
+    pos(width() - 450, 45),
     layer("ui"),
     scale(3),
   ]);
@@ -544,10 +558,10 @@ scene("game", (scoreNumber) => {
         destroy(fight);
         destroy(controlls);
 
-        GOBLIN_SPEED = GOBLIN_SPEED + 8;
-        GOBLIN_HEALTH = GOBLIN_HEALTH * 1.45;
-        GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.1;
-        SPAWN_RATE = SPAWN_RATE - 0.005;
+        GOBLIN_SPEED = GOBLIN_SPEED + 20;
+        GOBLIN_HEALTH = GOBLIN_HEALTH * 2;
+        GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.26;
+        SPAWN_RATE = SPAWN_RATE - 0.007;
         // BIGGER_GOBLIN_SPEED = BIGGER_GOBLIN_SPEED + 6;
         // BIGGER_GOBLIN_HEALTH = BIGGER_GOBLIN_HEALTH * 1.4;
         // BIGGER_GOBLIN_DAMAGE = BIGGER_GOBLIN_DAMAGE + 1;
@@ -674,7 +688,7 @@ scene("game", (scoreNumber) => {
               "bomb",
             ]);
             bomb.play("bomb");
-            camShake(20);
+            camShake(12);
             wait(BOMB_DURATION, () => {
               destroy(bomb);
             });
@@ -783,7 +797,6 @@ scene("game", (scoreNumber) => {
         });
 
         overlaps("goblin", "bomb", (goblin) => {
-          goblin.health = goblin.health - 10000;
           const hitMarker = add([
             text(Math.round(rand(1000, 1500))),
             pos(goblin.pos.x + 20, goblin.pos.y + 20),
@@ -795,26 +808,25 @@ scene("game", (scoreNumber) => {
           wait(1, () => {
             destroy(hitMarker);
           });
-          if (goblin.health <= 0) {
-            camShake(20);
-            score.text++;
-            destroy(goblin);
-            add([
-              sprite("splat"),
-              pos(goblin.pos.x - 10, goblin.pos.y + 10),
-              scale(0.05),
-              color(1, 1, 1, 0.5),
-              layer("background"),
-            ]);
-            add([
-              sprite("crater"),
-              pos(goblin.pos.x - 10, goblin.pos.y + 10),
-              scale(0.05),
-              color(1, 1, 1, 0.5),
-              layer("background"),
-            ]);
-            killCount++;
-          }
+
+          camShake(10);
+          score.text++;
+          destroy(goblin);
+          add([
+            sprite("splat"),
+            pos(goblin.pos.x - 10, goblin.pos.y + 10),
+            scale(0.05),
+            color(1, 1, 1, 0.5),
+            layer("background"),
+          ]);
+          add([
+            sprite("crater"),
+            pos(goblin.pos.x - 10, goblin.pos.y + 10),
+            scale(0.05),
+            color(1, 1, 1, 0.5),
+            layer("background"),
+          ]);
+          killCount++;
         });
 
         //ATTACK HITS GOBLIN
@@ -968,7 +980,7 @@ scene("game", (scoreNumber) => {
             const goblin1 = add([
               sprite("goblin", { animSpeed: 0.5, frame: 0 }),
               pos(-100, rand(-100, height())),
-              scale(0.5),
+              scale(rand(0.4, 0.6)),
               color(1, 1, 1, 1),
               layer("obj"),
               "goblin",
@@ -984,7 +996,7 @@ scene("game", (scoreNumber) => {
             const goblin2 = add([
               sprite("goblin", { animSpeed: 0.5, frame: 0 }),
               pos(width(), rand(-100, height())),
-              scale(0.5),
+              scale(rand(0.4, 0.6)),
               color(1, 1, 1, 1),
               layer("obj"),
               "goblin",
@@ -1000,7 +1012,7 @@ scene("game", (scoreNumber) => {
             const goblin3 = add([
               sprite("goblin", { animSpeed: 0.5, frame: 0 }),
               pos(rand(-100, width()), -100),
-              scale(0.5),
+              scale(rand(0.4, 0.6)),
               color(1, 1, 1, 1),
               layer("obj"),
               "goblin",
@@ -1017,7 +1029,7 @@ scene("game", (scoreNumber) => {
             const goblin4 = add([
               sprite("goblin", { animSpeed: 0.5, frame: 0 }),
               pos(rand(-100, width()), height()),
-              scale(0.5),
+              scale(rand(0.4, 0.6)),
               color(1, 1, 1, 1),
               layer("obj"),
               "goblin",
