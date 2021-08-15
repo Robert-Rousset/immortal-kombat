@@ -182,7 +182,7 @@ let WARRIOR_HEALTH = 10;
 let ATTACK_DAMAGE = 3;
 let ATTACK_SPEED = 1;
 let ATTACK_RANGE = 200;
-let WARRIOR_SPEED = 150;
+let WARRIOR_SPEED = 140;
 let DASH_DISTANCE = 4;
 let DASH_COOLDOWN = 2.5;
 let BOMB_COUNT = 1;
@@ -192,16 +192,17 @@ let BOMB_DURATION = 0.5;
 let BOMB_STAT = 1;
 function resetStats() {
   WARRIOR_HEALTH = 10;
-  ATTACK_DAMAGE = 2;
+  ATTACK_DAMAGE = 3;
   ATTACK_SPEED = 1;
   ATTACK_RANGE = 200;
-  WARRIOR_SPEED = 150;
+  WARRIOR_SPEED = 140;
   DASH_DISTANCE = 4;
   DASH_COOLDOWN = 2.5;
   BOMB_COUNT = 1;
   MAX_BOMBS = 1;
   BOMB_RANGE = 0.7;
-  BOMB_DURATION = BOMB_STAT = 1;
+  BOMB_DURATION = 0.5;
+  BOMB_STAT = 1;
   abilityPoints = 0;
   healthPoints = 0;
   damagePoints = 0;
@@ -211,11 +212,11 @@ function resetStats() {
   bombPoints = 0;
   roundNumber = 1;
   GOBLIN_SPEED = 180;
-  GOBLIN_HEALTH = 1.3;
-  GOBLIN_DAMAGE = 0.4;
+  GOBLIN_HEALTH = 1.001;
+  GOBLIN_DAMAGE = 0.2;
   SPAWN_RATE = 0.6;
   GOBLIN_REACTION = 0.2;
-  enemyCount = 15;
+  enemyCount = 19;
   scoreNumber = 0;
   renderAbilities(healthPoints, "he");
   renderAbilities(damagePoints, "d");
@@ -227,7 +228,7 @@ function resetStats() {
 
 //HEALTH INCREASES
 function increaseHealth() {
-  if (WARRIOR_HEALTH >= 130 || abilityPoints >= 4) {
+  if (WARRIOR_HEALTH >= 130 || abilityPoints >= 3) {
     return;
   } else {
     let healthStat = document.querySelector("#health");
@@ -256,7 +257,7 @@ function decreaseHealth() {
 
 //DAMAGE INCREASES
 function increaseDamage() {
-  if (ATTACK_DAMAGE >= 10000 || abilityPoints >= 4) {
+  if (ATTACK_DAMAGE >= 100000 || abilityPoints >= 3) {
     return;
   } else {
     let damageStat = document.querySelector("#attack-damage");
@@ -284,7 +285,7 @@ function decreaseDamage() {
 
 //ATTACK SPEED INCREASES
 function increaseAttackSpeed() {
-  if (ATTACK_SPEED <= 0.15 || abilityPoints >= 4) {
+  if (ATTACK_SPEED <= 0.15 || abilityPoints >= 3) {
     return;
   } else {
     let attackSpeedStat = document.querySelector("#attack-speed");
@@ -312,7 +313,7 @@ function decreaseAttackSpeed() {
 
 //ATTACK RANGE INCREASES
 function increaseAttackRange() {
-  if (ATTACK_RANGE >= 1070 || abilityPoints >= 4) {
+  if (ATTACK_RANGE >= 1070 || abilityPoints >= 3) {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
@@ -340,7 +341,7 @@ function decreaseAttackRange() {
 
 // INCREASE WARRIOR SPEED
 function increaseWarriorSpeed() {
-  if (WARRIOR_SPEED >= 450 || abilityPoints >= 4) {
+  if (WARRIOR_SPEED >= 440 || abilityPoints >= 3) {
     return;
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
@@ -395,7 +396,7 @@ function decreaseWarriorSpeed() {
 // }
 
 function increaseBomb() {
-  if (BOMB_STAT >= 13 || abilityPoints >= 4) {
+  if (BOMB_STAT >= 13 || abilityPoints >= 3) {
     return;
   } else {
     let bombStat = document.querySelector("#bomb");
@@ -433,7 +434,7 @@ function decreaseBomb() {
 //ENEMY STATS
 let GOBLIN_SPEED = 180;
 let GOBLIN_HEALTH = 1.001;
-let GOBLIN_DAMAGE = 0.4;
+let GOBLIN_DAMAGE = 0.2;
 let SPAWN_RATE = 0.6;
 let GOBLIN_REACTION = 0.2;
 
@@ -558,9 +559,9 @@ scene("game", (scoreNumber) => {
         destroy(fight);
         destroy(controlls);
 
-        GOBLIN_SPEED = GOBLIN_SPEED + 20;
-        GOBLIN_HEALTH = GOBLIN_HEALTH * 2;
-        GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.26;
+        GOBLIN_SPEED = GOBLIN_SPEED + 18;
+        GOBLIN_HEALTH = GOBLIN_HEALTH * 1.5 + 1;
+        GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.8;
         SPAWN_RATE = SPAWN_RATE - 0.007;
         // BIGGER_GOBLIN_SPEED = BIGGER_GOBLIN_SPEED + 6;
         // BIGGER_GOBLIN_HEALTH = BIGGER_GOBLIN_HEALTH * 1.4;

@@ -631,7 +631,7 @@ export default function UpdateStats() {
             </div>
           </section>
         </article>
-        <h5>Spend up to 4 ability points</h5>
+        <h5>Spend up to 3 ability points</h5>
         <div className="ability-point-box">
           <img
             id="ab1"
@@ -651,12 +651,12 @@ export default function UpdateStats() {
             alt="ability point"
             className="ability-point"
           ></img>
-          <img
+          {/* <img
             id="ab4"
             src={abilityPoint}
             alt="ability point"
             className="ability-point"
-          ></img>
+          ></img> */}
         </div>
         <div className="button-box">
           <button className="button next-round" onClick={nextRound}>

@@ -359,30 +359,30 @@ function renderAbilityPoints(abilityPoints) {
     document.getElementById("ab1").src = abilityPoint;
     document.getElementById("ab2").src = abilityPoint;
     document.getElementById("ab3").src = abilityPoint;
-    document.getElementById("ab4").src = abilityPoint;
+    // document.getElementById("ab4").src = abilityPoint;
   }
   if (abilityPoints === 1) {
     document.getElementById("ab1").src = abilityPoint;
     document.getElementById("ab2").src = abilityPoint;
-    document.getElementById("ab3").src = abilityPoint;
-    document.getElementById("ab4").src = noAbilityPoint;
+    document.getElementById("ab3").src = noAbilityPoint;
+    // document.getElementById("ab4").src = noAbilityPoint;
   }
   if (abilityPoints === 2) {
     document.getElementById("ab1").src = abilityPoint;
-    document.getElementById("ab2").src = abilityPoint;
-    document.getElementById("ab3").src = noAbilityPoint;
-    document.getElementById("ab4").src = noAbilityPoint;
-  }
-  if (abilityPoints === 3) {
-    document.getElementById("ab1").src = abilityPoint;
     document.getElementById("ab2").src = noAbilityPoint;
     document.getElementById("ab3").src = noAbilityPoint;
-    document.getElementById("ab4").src = noAbilityPoint;
+    // document.getElementById("ab4").src = noAbilityPoint;
   }
-  if (abilityPoints === 4) {
+  if (abilityPoints === 3) {
     document.getElementById("ab1").src = noAbilityPoint;
     document.getElementById("ab2").src = noAbilityPoint;
     document.getElementById("ab3").src = noAbilityPoint;
-    document.getElementById("ab4").src = noAbilityPoint;
+    // document.getElementById("ab4").src = noAbilityPoint;
   }
+  // if (abilityPoints === 4) {
+  //   document.getElementById("ab1").src = noAbilityPoint;
+  //   document.getElementById("ab2").src = noAbilityPoint;
+  //   document.getElementById("ab3").src = noAbilityPoint;
+  //   document.getElementById("ab4").src = noAbilityPoint;
+  // }
 }

@@ -5,9 +5,6 @@ import Scoreboard from "./Scoreboard";
 import Auth from "../utils/auth";
 
 export default function GameOver() {
-  let submitScoreButton = document.querySelector(".submit-score");
-  let playAgainButton = document.querySelector(".play-hidden");
-
   const [submitScore] = useMutation(SUBMIT_SCORE, {
     update(cache, { data: { submitScore } }) {
       try {
@@ -25,6 +22,8 @@ export default function GameOver() {
   const scores = data?.scores || [];
 
   async function submitScoreClick() {
+    let submitScoreButton = document.querySelector(".submit-score");
+    let playAgainButton = document.querySelector(".play-hidden");
     submitScoreButton.setAttribute("class", "submit-hidden");
     playAgainButton.setAttribute("class", "button play-again");
     let userScoreScore = document.querySelector(".score");
