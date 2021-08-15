@@ -4,7 +4,11 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER, ADD_USER } from "../utils/mutations";
 
 export default function Profile() {
-  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [login] = useMutation(LOGIN_USER);
   const [addUser] = useMutation(ADD_USER);
 
@@ -14,18 +18,21 @@ export default function Profile() {
     "Dont have an account yet?"
   );
   const [loginOrSignupButton, setloginOrSignupButton] = useState("Signup");
+  const [userNameInput, setUserNameInput] = useState("hidden");
 
   useEffect(() => {
-    setFormState({ email: "", password: "" });
+    setFormState({ name: "", email: "", password: "" });
     if (toggle) {
       setSubmitButton("Sign up");
       setloginOrSignup("Already got an accout?");
       setloginOrSignupButton("Login");
+      setUserNameInput("login-input");
     }
     if (!toggle) {
       setSubmitButton("Login");
       setloginOrSignup("Dont have an account yet?");
       setloginOrSignupButton("Signup");
+      setUserNameInput("hidden");
     }
   }, [toggle]);
 
@@ -40,7 +47,6 @@ export default function Profile() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    let center = document.querySelector(".center");
 
     if (submitButton === "Login") {
       try {
@@ -54,6 +60,7 @@ export default function Profile() {
       }
 
       setFormState({
+        name: "",
         email: "",
         password: "",
       });
@@ -69,11 +76,11 @@ export default function Profile() {
         console.error(e);
       }
       setFormState({
+        name: "",
         email: "",
         password: "",
       });
     }
-    center.setAttribute("class", "getOut");
   };
 
   function logout() {
@@ -86,6 +93,14 @@ export default function Profile() {
       </div>
       <div className={Auth.loggedIn() ? "hidden" : "login-container"}>
         <form onSubmit={handleFormSubmit}>
+          <input
+            placeholder="Name"
+            name="name"
+            type="name"
+            value={formState.name}
+            onChange={handleChange}
+            className={userNameInput}
+          ></input>
           <input
             placeholder="Email"
             name="email"

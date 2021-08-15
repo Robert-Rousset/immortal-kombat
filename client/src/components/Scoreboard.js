@@ -7,15 +7,16 @@ export default function Scoreboard({ scores }) {
     <div className="scoreboard">
       <h3>High Scores</h3>
       <div className="score-definitions">
-        <p>RANKING </p>
         <p>NAME </p> <p>SCORE </p>
       </div>
-      {scores.map((score) => (
-        <div key={score._id} className="scores">
-          <h4 className="score-details">{score.name}</h4>
-          <h4 className="actual-score"> {score.score}</h4>
-        </div>
-      ))}
+      <ol>
+        {scores.map((score) => (
+          <li key={score._id} className="scores">
+            <h5 className="score-details">{score.name}</h5>
+            <h5 className="actual-score"> {score.score}</h5>
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }

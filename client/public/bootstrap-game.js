@@ -21,15 +21,13 @@ function endRound(
 
   healthStat.innerHTML = ` ${health}`;
   damageStat.innerHTML = ` ${Math.round(attackDamage * 10) / 10}`;
-  attackSpeedStat.innerHTML = ` ${Math.round(attackSpeed * 10) / 10}`;
+  attackSpeedStat.innerHTML = ` ${Math.round(attackSpeed * 100) / 100}`;
   attackRangeStat.innerHTML = ` ${attackRange}`;
   movementSpeedStat.innerHTML = ` ${movementSpeed}`;
-  dashStat.innerHTML = ` ${dash}`;
+  dashStat.innerHTML = ` ${Math.round(dash * 10) / 10}`;
   scoreStat.innerHTML = ` ${score}`;
   roundStat.innerHTML = ` ${round}`;
 }
-
-function updateStats() {}
 
 function score(score) {
   gameoverBox.setAttribute("class", "scoreboard-container");

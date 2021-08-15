@@ -58,7 +58,7 @@ h4 {
   color: var(--light);
   font-family: "Roboto", sans-serif;
   text-align: center;
-  border-radius: 100px;
+  border-radius: 20px;
   padding-top: 20px;
   box-shadow: rgb(0, 0, 0, 0.7) 0px -4px 4px;
 }
@@ -175,19 +175,22 @@ h5 {
 }
 .login-container::before {
   content: "";
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  left: 0px;
+  position: fixed;
+  top: 100px;
+  right: -100px;
+  left: -100px;
   bottom: 0px;
   background-image: url(./img/smoke.jpg);
-  background-size: 250%;
+  background-size: 150%;
   background-position: top center;
   opacity: 0.7;
   border-radius: 20px;
   z-index: 1;
-  box-shadow: inset black 0px 0px 50px, inset black 10px 10px 20px,
-    inset -10px -10px 20px black;
+  transition: ease-in-out 1s;
+  box-shadow: inset black 0px 0px 300px, inset black 10px 10px 300px,
+    inset -10px -10px 300px black, inset black 0px 0px 300px,
+    inset black 10px 10px 300px, inset -10px -10px 300px black,
+    inset black 0px 0px 300px;
 }
 .login-input {
   z-index: 2;
@@ -197,6 +200,9 @@ h5 {
 }
 .login-info {
   z-index: 2;
+}
+.username-input {
+  position: relative;
 }
 
 form {
@@ -311,8 +317,8 @@ input:focus {
   padding: 2rem;
   position: absolute;
   background-color: rgb(0, 0, 0, 0.5);
-  box-shadow: inset rgb(5, 0, 0) 0px 0px 500px,
-    0px 0px 100px rgba(92, 92, 92, 0.5);
+  box-shadow: inset rgb(5, 0, 0) 0px 0px 500px, inset rgb(5, 0, 0) 0px 0px 500px,
+    inset rgb(5, 0, 0) 0px 0px 500px, 0px 0px 100px rgba(92, 92, 92, 0.5);
   border-radius: 50px;
   backdrop-filter: blur(2px);
 }
@@ -366,7 +372,7 @@ input:focus {
   margin-bottom: 20px;
   margin-top: 10px;
   padding-bottom: 10px;
-  border-radius: 100px;
+  border-radius: 50px;
   box-shadow: rgb(0, 0, 0, 0.7) 0px 5px 5px;
   flex-wrap: wrap;
 }

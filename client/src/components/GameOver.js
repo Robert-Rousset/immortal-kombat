@@ -1,14 +1,12 @@
-import { useState } from "react";
-
 import { useMutation, useQuery } from "@apollo/client";
 import { SUBMIT_SCORE } from "../utils/mutations";
 import { QUERY_HIGHSCORES } from "../utils/queries";
 import Scoreboard from "./Scoreboard";
+import Auth from "../utils/auth";
 
 export default function GameOver() {
   let submitScoreButton = document.querySelector(".submit-score");
   let playAgainButton = document.querySelector(".play-hidden");
-  const [warriorName, setWarriorName] = useState("");
 
   const [submitScore] = useMutation(SUBMIT_SCORE, {
     update(cache, { data: { submitScore } }) {
@@ -33,7 +31,7 @@ export default function GameOver() {
     let userScore = userScoreScore.innerHTML;
     try {
       await submitScore({
-        variables: { name: warriorName, score: userScore },
+        variables: { name: Auth.getUser().data.name, score: userScore },
       });
     } catch (error) {
       console.error(error);
@@ -51,27 +49,12 @@ export default function GameOver() {
     window.go("game", 0);
   }
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    if (name === "warriorName") {
-      setWarriorName(value);
-    }
-  };
-
   return (
     <div className="score-hidden">
       <h2 className="game-over">GAME OVER</h2>
 
       <h5>Score:</h5>
       <h3 className="score">0</h3>
-      <input
-        className="score-input"
-        name="warriorName"
-        placeholder="name..."
-        value={warriorName}
-        onChange={handleChange}
-      ></input>
       <button className="button submit-score" onClick={submitScoreClick}>
         Submit Score
       </button>

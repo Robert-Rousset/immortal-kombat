@@ -8,8 +8,9 @@ export default function UpdateStats() {
 
     thisStatsBox.setAttribute("class", "stats-hidden");
 
-    window.go("game", scorenum);
     window.increaseEnemies();
+
+    window.go("game", scorenum);
   }
   return (
     <div className="stats-hidden">

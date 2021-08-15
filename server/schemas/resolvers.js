@@ -19,13 +19,13 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     scores: async () => {
-      return Scoreboard.find().sort({ score: "desc" });
+      return Scoreboard.find().sort({ score: "asc" });
     },
   },
 
   Mutation: {
-    addUser: async (parent, { email, password }) => {
-      const profile = await User.create({ email, password });
+    addUser: async (parent, { name, email, password }) => {
+      const profile = await User.create({ name, email, password });
       const token = signToken(profile);
 
       return { token, profile };
@@ -46,8 +46,10 @@ const resolvers = {
       const token = signToken(profile);
       return { token, profile };
     },
-    submitScore: async (parent, { name, score }) => {
-      return Scoreboard.create({ name, score });
+    submitScore: async (parent, { score }, context) => {
+      if (context.user) {
+        return await Scoreboard.create({ name: context.user.name, score });
+      }
     },
   },
 };
