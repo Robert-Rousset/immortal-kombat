@@ -216,6 +216,7 @@ function resetStats() {
   SPAWN_RATE = 0.6;
   GOBLIN_REACTION = 0.2;
   enemyCount = 15;
+  scoreNumber = 0;
   renderAbilities(healthPoints, "he");
   renderAbilities(damagePoints, "d");
   renderAbilities(speedPoints, "as");
