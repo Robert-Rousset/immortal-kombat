@@ -215,6 +215,7 @@ function resetStats() {
   GOBLIN_DAMAGE = 0.4;
   SPAWN_RATE = 0.6;
   GOBLIN_REACTION = 0.2;
+  enemyCount = 15;
   renderAbilities(healthPoints, "he");
   renderAbilities(damagePoints, "d");
   renderAbilities(speedPoints, "as");
@@ -446,7 +447,7 @@ let GOBLIN_REACTION = 0.2;
 //
 // GENERAL
 
-let enemyCount = 18;
+let enemyCount = 15;
 
 function increaseEnemies() {
   enemyCount = Math.round(enemyCount * 1.25);
@@ -604,10 +605,10 @@ scene("game", (scoreNumber) => {
               warrior.move(-WARRIOR_SPEED, 0);
             });
           }
-          keyRelease("a", () => {
-            warrior.play("idle");
-            warrior.move(0, 0);
-          });
+          // keyRelease("a", () => {
+          //   warrior.play("idle");
+          //   warrior.move(0, 0);
+          // });
 
           // DOWN MOVEMENT
 
@@ -620,10 +621,10 @@ scene("game", (scoreNumber) => {
               warrior.move(0, WARRIOR_SPEED);
             });
           }
-          keyRelease("s", () => {
-            warrior.play("idle");
-            warrior.move(0, 0);
-          });
+          // keyRelease("s", () => {
+          //   warrior.play("idle");
+          //   warrior.move(0, 0);
+          // });
 
           // RIGHT MOVEMENT
           keyPress("d", () => {
@@ -638,10 +639,10 @@ scene("game", (scoreNumber) => {
               warrior.move(WARRIOR_SPEED, 0);
             });
           }
-          keyRelease("d", () => {
-            warrior.play("idle");
-            warrior.move(0, 0);
-          });
+          // keyRelease("d", () => {
+          //   warrior.play("idle");
+          //   warrior.move(0, 0);
+          // });
 
           // UP MOVEMENT
           keyPress("w", () => {
@@ -653,10 +654,10 @@ scene("game", (scoreNumber) => {
               warrior.move(0, -WARRIOR_SPEED);
             });
           }
-          keyRelease("w", () => {
-            warrior.play("idle");
-            warrior.move(0, 0);
-          });
+          // keyRelease("w", () => {
+          //   warrior.play("idle");
+          //   warrior.move(0, 0);
+          // });
         } else {
           return;
         }
@@ -788,7 +789,7 @@ scene("game", (scoreNumber) => {
           ]);
           hitMarker.on("update", () => {
             hitMarker.move(rand(-250, 250), rand(-250, 250));
-            hitMarker.color = rand(rgb(1, 0, 0), rgb(1, 1, 1));
+            hitMarker.color = rand(rgb(2, 1, 0), rgb(1, 0, 0));
           });
           wait(1, () => {
             destroy(hitMarker);
