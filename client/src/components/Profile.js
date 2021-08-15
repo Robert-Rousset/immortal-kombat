@@ -19,6 +19,8 @@ export default function Profile() {
   );
   const [loginOrSignupButton, setloginOrSignupButton] = useState("Signup");
   const [userNameInput, setUserNameInput] = useState("hidden");
+  const [loginError, setLoginError] = useState("hidden");
+  const [signinError, setSigninError] = useState("hidden");
 
   useEffect(() => {
     setFormState({ name: "", email: "", password: "" });
@@ -57,6 +59,10 @@ export default function Profile() {
         Auth.login(data.login.token);
       } catch (e) {
         console.error(e);
+        setLoginError("login-error");
+        setTimeout(() => {
+          setLoginError("hidden");
+        }, 5000);
       }
 
       setFormState({
@@ -74,6 +80,10 @@ export default function Profile() {
         Auth.login(data.addUser.token);
       } catch (e) {
         console.error(e);
+        setSigninError("signin-error");
+        setTimeout(() => {
+          setSigninError("hidden");
+        }, 5000);
       }
       setFormState({
         name: "",
@@ -93,6 +103,8 @@ export default function Profile() {
       </div>
       <div className={Auth.loggedIn() ? "hidden" : "login-container"}>
         <form onSubmit={handleFormSubmit}>
+          <p className={loginError}>No users match those credentials</p>
+          <p className={signinError}>Invalid username, email or password</p>
           <input
             placeholder="Name"
             name="name"
@@ -101,6 +113,7 @@ export default function Profile() {
             onChange={handleChange}
             className={userNameInput}
           ></input>
+
           <input
             placeholder="Email"
             name="email"

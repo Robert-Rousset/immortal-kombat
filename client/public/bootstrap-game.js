@@ -4,7 +4,7 @@ function endRound(
   attackSpeed,
   attackRange,
   movementSpeed,
-  dash,
+  bomb,
   score,
   round
 ) {
@@ -13,7 +13,7 @@ function endRound(
   let attackSpeedStat = document.querySelector("#attack-speed");
   let attackRangeStat = document.querySelector("#attack-range");
   let movementSpeedStat = document.querySelector("#movement-speed");
-  let dashStat = document.querySelector("#dash");
+  let bombStat = document.querySelector("#bomb");
   let scoreStat = document.querySelector("#score");
   let roundStat = document.querySelector("#round");
 
@@ -22,9 +22,9 @@ function endRound(
   healthStat.innerHTML = ` ${health}`;
   damageStat.innerHTML = ` ${Math.round(attackDamage * 10) / 10}`;
   attackSpeedStat.innerHTML = ` ${Math.round(attackSpeed * 100) / 100}`;
-  attackRangeStat.innerHTML = ` ${attackRange}`;
+  attackRangeStat.innerHTML = ` ${Math.round(attackRange * 10) / 10}`;
   movementSpeedStat.innerHTML = ` ${movementSpeed}`;
-  dashStat.innerHTML = ` ${Math.round(dash * 10) / 10}`;
+  bombStat.innerHTML = ` ${Math.round(bomb * 10) / 10}`;
   scoreStat.innerHTML = ` ${score}`;
   roundStat.innerHTML = ` ${round}`;
 }

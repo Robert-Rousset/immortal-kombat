@@ -11,6 +11,11 @@ add([
   pos(width() / 2, height() / 2 - 300),
   origin("center"),
 ]);
+add([
+  text("Move: w,a,s,d \n\n Dash: Space \n\n Bomb: Shift\n\n Fire: Mouse"),
+  pos(width() / 2, height() - 200),
+  origin("center"),
+]);
 loadSprite("background", "./img/battleground.jpg");
 
 //
@@ -169,7 +174,7 @@ let damagePoints = 0;
 let speedPoints = 0;
 let rangePoints = 0;
 let movementPoints = 0;
-let dashPoints = 0;
+let bombPoints = 0;
 let roundNumber = 1;
 
 // WARRIOR STATS
@@ -180,6 +185,43 @@ let ATTACK_RANGE = 200;
 let WARRIOR_SPEED = 150;
 let DASH_DISTANCE = 4;
 let DASH_COOLDOWN = 2.5;
+let BOMB_COUNT = 1;
+let MAX_BOMBS = 1;
+let BOMB_RANGE = 0.7;
+let BOMB_DURATION = 0.5;
+let BOMB_STAT = 1;
+function resetStats() {
+  WARRIOR_HEALTH = 10;
+  ATTACK_DAMAGE = 2;
+  ATTACK_SPEED = 1;
+  ATTACK_RANGE = 200;
+  WARRIOR_SPEED = 150;
+  DASH_DISTANCE = 4;
+  DASH_COOLDOWN = 2.5;
+  BOMB_COUNT = 1;
+  MAX_BOMBS = 1;
+  BOMB_RANGE = 0.7;
+  BOMB_DURATION = BOMB_STAT = 1;
+  abilityPoints = 0;
+  healthPoints = 0;
+  damagePoints = 0;
+  speedPoints = 0;
+  rangePoints = 0;
+  movementPoints = 0;
+  bombPoints = 0;
+  roundNumber = 1;
+  GOBLIN_SPEED = 180;
+  GOBLIN_HEALTH = 1.3;
+  GOBLIN_DAMAGE = 0.4;
+  SPAWN_RATE = 0.6;
+  GOBLIN_REACTION = 0.2;
+  renderAbilities(healthPoints, "he");
+  renderAbilities(damagePoints, "d");
+  renderAbilities(speedPoints, "as");
+  renderAbilities(rangePoints, "ar");
+  renderAbilities(movementPoints, "m");
+  renderAbilities(bombPoints, "da");
+}
 
 //HEALTH INCREASES
 function increaseHealth() {
@@ -268,12 +310,12 @@ function decreaseAttackSpeed() {
 
 //ATTACK RANGE INCREASES
 function increaseAttackRange() {
-  if (ATTACK_RANGE >= 1000 || abilityPoints >= 3) {
+  if (ATTACK_RANGE >= 1070 || abilityPoints >= 3) {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
-    ATTACK_RANGE = ATTACK_RANGE + 40;
-    attackRangeStat.innerHTML = ` ${ATTACK_RANGE}`;
+    ATTACK_RANGE = ATTACK_RANGE * 1.15;
+    attackRangeStat.innerHTML = ` ${Math.round(ATTACK_RANGE * 10) / 10}`;
     abilityPoints++;
     rangePoints++;
     renderAbilities(rangePoints, "ar");
@@ -285,8 +327,8 @@ function decreaseAttackRange() {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
-    ATTACK_RANGE = ATTACK_RANGE - 40;
-    attackRangeStat.innerHTML = ` ${ATTACK_RANGE}`;
+    ATTACK_RANGE = ATTACK_RANGE / 1.15;
+    attackRangeStat.innerHTML = ` ${Math.round(ATTACK_RANGE * 10) / 10}`;
     abilityPoints--;
     rangePoints--;
     renderAbilities(rangePoints, "ar");
@@ -296,12 +338,14 @@ function decreaseAttackRange() {
 
 // INCREASE WARRIOR SPEED
 function increaseWarriorSpeed() {
-  if (WARRIOR_SPEED >= 460 || abilityPoints >= 3) {
+  if (WARRIOR_SPEED >= 450 || abilityPoints >= 3) {
     return;
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
     WARRIOR_SPEED = WARRIOR_SPEED + 25;
     movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
+    DASH_DISTANCE = DASH_DISTANCE + 0.05;
+    DASH_COOLDOWN = DASH_COOLDOWN - 0.2;
     abilityPoints++;
     movementPoints++;
     renderAbilities(movementPoints, "m");
@@ -315,6 +359,8 @@ function decreaseWarriorSpeed() {
     let movementSpeedStat = document.querySelector("#movement-speed");
     WARRIOR_SPEED = WARRIOR_SPEED - 25;
     movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
+    DASH_DISTANCE = DASH_DISTANCE - 0.05;
+    DASH_COOLDOWN = DASH_COOLDOWN + 0.2;
     abilityPoints--;
     movementPoints--;
     renderAbilities(movementPoints, "m");
@@ -323,33 +369,60 @@ function decreaseWarriorSpeed() {
 }
 
 //INCREASE DASH DISTANCE
-function increaseDashDistance() {
-  if (DASH_DISTANCE >= 20 || abilityPoints >= 3) {
+// function increaseDashDistance() {
+//   if (DASH_DISTANCE >= 20 || abilityPoints >= 3) {
+//     return;
+//   } else {
+//     let dashStat = document.querySelector("#dash");
+//     DASH_DISTANCE = DASH_DISTANCE + 0.05;
+//     DASH_COOLDOWN = DASH_COOLDOWN - 0.2;
+//     dashStat.innerHTML = `${Math.round(DASH_DISTANCE * 10) / 10}`;
+
+//   }
+// }
+// function decreaseDashDistance() {
+//   if (DASH_DISTANCE <= 4 || abilityPoints <= 0) {
+//     return;
+//   } else {
+//     let dashStat = document.querySelector("#dash");
+//     DASH_DISTANCE = DASH_DISTANCE - 0.05;
+//     DASH_COOLDOWN = DASH_COOLDOWN + 0.2;
+//     dashStat.innerHTML = `${Math.round(DASH_DISTANCE * 10) / 10}`;
+
+//   }
+// }
+
+function increaseBomb() {
+  if (BOMB_STAT >= 13 || abilityPoints >= 3) {
     return;
   } else {
-    let dashStat = document.querySelector("#dash");
-    DASH_DISTANCE = DASH_DISTANCE + 0.1;
-    DASH_COOLDOWN = DASH_COOLDOWN - 0.2;
-    dashStat.innerHTML = `${Math.round(DASH_DISTANCE * 10) / 10}`;
+    let bombStat = document.querySelector("#bomb");
+    MAX_BOMBS = MAX_BOMBS * 1.1;
+    BOMB_RANGE = BOMB_RANGE * 1.1;
+    BOMB_DURATION = BOMB_DURATION + 0.05;
+    BOMB_STAT = BOMB_STAT + 1;
+    bombStat.innerHTML = `${BOMB_STAT}`;
     abilityPoints++;
-    dashPoints++;
-    renderAbilities(dashPoints, "da");
+    bombPoints++;
+    renderAbilities(bombPoints, "da");
     renderAbilityPoints(abilityPoints);
   }
 }
-function decreaseDashDistance() {
-  if (DASH_DISTANCE <= 4 || abilityPoints <= 0) {
+function decreaseBomb() {
+  if (BOMB_STAT <= 1 || abilityPoints <= 0) {
     return;
-  } else {
-    let dashStat = document.querySelector("#dash");
-    DASH_DISTANCE = DASH_DISTANCE - 0.1;
-    DASH_COOLDOWN = DASH_COOLDOWN + 0.2;
-    dashStat.innerHTML = `${Math.round(DASH_DISTANCE * 10) / 10}`;
-    abilityPoints--;
-    dashPoints--;
-    renderAbilities(dashPoints, "da");
-    renderAbilityPoints(abilityPoints);
   }
+  let bombStat = document.querySelector("#bomb");
+  MAX_BOMBS = MAX_BOMBS / 1.1;
+  BOMB_RANGE = BOMB_RANGE / 1.1;
+  BOMB_DURATION = BOMB_DURATION - 0.05;
+  BOMB_STAT = BOMB_STAT - 1;
+  bombStat.innerHTML = `${BOMB_STAT}`;
+
+  abilityPoints--;
+  bombPoints--;
+  renderAbilities(bombPoints, "da");
+  renderAbilityPoints(abilityPoints);
 }
 
 //
@@ -381,7 +454,6 @@ function increaseEnemies() {
 }
 
 scene("game", (scoreNumber) => {
-  let hasBomb = true;
   let movementAllowed = true;
   //SETUP
   origin("center");
@@ -434,8 +506,21 @@ scene("game", (scoreNumber) => {
     layer("ui"),
     scale(3),
   ]);
-  const bombnum = add([text(1), pos(width() - 400, 45), layer("ui"), scale(3)]);
+  if (MAX_BOMBS > BOMB_COUNT) {
+    BOMB_COUNT++;
+  }
+  const bombnum = add([
+    text(BOMB_COUNT),
+    pos(width() - 400, 45),
+    layer("ui"),
+    scale(3),
+  ]);
 
+  const controlls = add([
+    text("Move: w,a,s,d \n\n Dash: Space \n\n Bomb: Shift\n\n Fire: Mouse"),
+    pos(width() / 2, height() / 2 + 200),
+    origin("center"),
+  ]);
   wait(0.5, () => {
     const round = add([
       text(`Round ${roundNumber}`),
@@ -455,9 +540,10 @@ scene("game", (scoreNumber) => {
       ]);
       wait(1, () => {
         destroy(fight);
+        destroy(controlls);
 
         GOBLIN_SPEED = GOBLIN_SPEED + 8;
-        GOBLIN_HEALTH = GOBLIN_HEALTH * 1.6;
+        GOBLIN_HEALTH = GOBLIN_HEALTH * 1.45;
         GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.1;
         SPAWN_RATE = SPAWN_RATE - 0.005;
         // BIGGER_GOBLIN_SPEED = BIGGER_GOBLIN_SPEED + 6;
@@ -512,9 +598,6 @@ scene("game", (scoreNumber) => {
           keyPress("a", () => {
             warrior.changeSprite("warriorLeft", { animSpeed: 0.1, frame: 0 });
             warrior.play("walk");
-            console.log("TOTAL ENEMIES", totalEnemies);
-            console.log("enemyCount ", enemyCount);
-            console.log("killcount", killCount);
           });
           if (movementAllowed) {
             keyDown("a", () => {
@@ -579,22 +662,23 @@ scene("game", (scoreNumber) => {
         }
 
         keyPress("shift", () => {
-          if (hasBomb) {
+          if (BOMB_COUNT > 0) {
             const bomb = add([
               sprite("explosion", { animSpeed: 0.1, frame: 0 }),
-              pos(warrior.pos.x - 240, warrior.pos.y - 220),
-              scale(1.5),
+              pos(warrior.pos.x + 50, warrior.pos.y + 100),
+              scale(BOMB_RANGE),
               layer("obj"),
+              origin("center"),
               "bomb",
             ]);
             bomb.play("bomb");
             camShake(20);
-            wait(0.8, () => {
+            wait(BOMB_DURATION, () => {
               destroy(bomb);
             });
-            destroy(bombSprite);
-            destroy(bombnum);
-            hasBomb = false;
+
+            BOMB_COUNT--;
+            bombnum.text = BOMB_COUNT;
           }
         });
 
@@ -650,10 +734,11 @@ scene("game", (scoreNumber) => {
                 ATTACK_SPEED,
                 ATTACK_RANGE,
                 WARRIOR_SPEED,
-                DASH_DISTANCE,
+                BOMB_STAT,
                 scoreNum,
                 roundNumber
               );
+              go("pauseGame");
             });
           }
           const warriorLocation = warrior.pos.add(-20, 0);
@@ -696,19 +781,20 @@ scene("game", (scoreNumber) => {
         });
 
         overlaps("goblin", "bomb", (goblin) => {
-          goblin.health = goblin.health - rand(1000, 1500);
+          goblin.health = goblin.health - 10000;
           const hitMarker = add([
             text(Math.round(rand(1000, 1500))),
             pos(goblin.pos.x + 20, goblin.pos.y + 20),
           ]);
           hitMarker.on("update", () => {
-            hitMarker.move(50, 50);
+            hitMarker.move(rand(-250, 250), rand(-250, 250));
+            hitMarker.color = rand(rgb(1, 0, 0), rgb(1, 1, 1));
           });
           wait(1, () => {
             destroy(hitMarker);
           });
           if (goblin.health <= 0) {
-            camShake(12);
+            camShake(20);
             score.text++;
             destroy(goblin);
             add([
@@ -737,7 +823,7 @@ scene("game", (scoreNumber) => {
             pos(goblin.pos.x + 20, goblin.pos.y + 20),
           ]);
           hitMarker.on("update", () => {
-            hitMarker.move(-10, -10);
+            hitMarker.move(rand(-30, 30), rand(-10, -40));
           });
 
           goblin.color = { r: 1, g: 0, b: 0, a: 1 };
@@ -1103,6 +1189,15 @@ scene("game", (scoreNumber) => {
       });
     });
   });
+});
+scene("pauseGame", () => {
+  const background = add([
+    sprite("background"),
+    pos(width() / 2, height() / 2),
+    scale(2),
+    origin("center"),
+    layer("background"),
+  ]);
 });
 
 keyPress("space", () => {

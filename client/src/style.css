@@ -447,8 +447,16 @@ input:focus {
 #attack-speed,
 #attack-range,
 #movement-speed,
-#dash {
+#bomb {
   font-size: 2rem;
   color: var(--complimentary);
   font-family: "Roboto", sans-serif;
+}
+.login-error {
+  color: rgb(201, 46, 46);
+  z-index: 1;
+}
+.signin-error {
+  color: rgb(201, 46, 46);
+  z-index: 1;
 }

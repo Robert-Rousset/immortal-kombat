@@ -530,16 +530,16 @@ export default function UpdateStats() {
             </div>
 
             <div className="each-stat-container">
-              <h4>Dash Speed</h4>
+              <h4>Upgrade Bomb</h4>
               <div className="stat">
                 <div>
-                  <p id="dash">0</p>
+                  <p id="bomb">0</p>
                 </div>
                 <div>
                   <button
                     className="upgrade-stat-neg"
                     onClick={() => {
-                      window.decreaseDashDistance();
+                      window.decreaseBomb();
                     }}
                   >
                     -
@@ -547,7 +547,7 @@ export default function UpdateStats() {
                   <button
                     className="upgrade-stat"
                     onClick={() => {
-                      window.increaseDashDistance();
+                      window.increaseBomb();
                     }}
                   >
                     +

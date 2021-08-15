@@ -46,6 +46,7 @@ export default function GameOver() {
     newPlayAgainButton.setAttribute("class", "play-hidden");
 
     highscoreBox.setAttribute("class", "score-hidden");
+    window.resetStats();
     window.go("game", 0);
   }
 
