@@ -270,7 +270,7 @@ function increaseDamage() {
   }
 }
 function decreaseDamage() {
-  if (ATTACK_DAMAGE <= 2 || abilityPoints <= 0) {
+  if (ATTACK_DAMAGE <= 3 || abilityPoints <= 0) {
     return;
   } else {
     let damageStat = document.querySelector("#attack-damage");
@@ -461,6 +461,15 @@ scene("game", (scoreNumber) => {
   //SETUP
   origin("center");
   layers([("background", "obj", "ui"), "obj"]);
+
+  const scoretext = add([
+    text("kills"),
+    pos(50, 60),
+    layer("ui"),
+    scale(1),
+    origin("center"),
+  ]);
+
   const score = add([
     text(scoreNumber),
     pos(150, 60),

@@ -98,9 +98,9 @@ export default function Profile() {
   }
   return (
     <>
-      <div className={Auth.loggedIn() ? "profile" : "hidden"}>
+      {/* <div className={Auth.loggedIn() ? "profile" : "hidden"}>
         <button className="button">Profile</button>
-      </div>
+      </div> */}
       <div className={Auth.loggedIn() ? "hidden" : "login-container"}>
         <form onSubmit={handleFormSubmit}>
           <p className={loginError}>No users match those credentials</p>
