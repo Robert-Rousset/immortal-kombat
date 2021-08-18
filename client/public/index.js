@@ -457,7 +457,7 @@ function increaseEnemies() {
 }
 
 scene("game", (scoreNumber) => {
-  GOBLIN_SPEED = GOBLIN_SPEED + 20;
+  GOBLIN_SPEED = GOBLIN_SPEED + 14;
   GOBLIN_HEALTH = GOBLIN_HEALTH * 1.45;
   GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.8;
   SPAWN_RATE = SPAWN_RATE - 0.007;
