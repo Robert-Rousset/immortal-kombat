@@ -23,10 +23,11 @@ This is a top-down survival horde mode fighting game where you play as a warrior
 ### Screenshots
 
 <img src="./client/public/screenshots/start.png" height="400">
-<img src="./client/public/screenshots/bomb.png" height="400">
+<img src="./client/public/screenshots/bomb.png" height="200">
+<img src="./client/public/screenshots/attack.png" height="200">
 
 <img src="./client/public/screenshots/stats.png" height="400">
-<img src="./client/public/screenshots/attack.png" height="400">
+
 ![stats](.
 
 ![attack]()
