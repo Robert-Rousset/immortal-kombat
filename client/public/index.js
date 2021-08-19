@@ -213,8 +213,8 @@ function resetStats() {
   movementPoints = 0;
   bombPoints = 0;
   roundNumber = 1;
-  GOBLIN_SPEED = 170;
-  GOBLIN_HEALTH = 3;
+  GOBLIN_SPEED = 160;
+  GOBLIN_HEALTH = 4.5;
   GOBLIN_DAMAGE = 0.6;
   SPAWN_RATE = 0.48;
   GOBLIN_REACTION = 0.25;
@@ -287,7 +287,7 @@ function decreaseDamage() {
 
 //ATTACK SPEED INCREASES
 function increaseAttackSpeed() {
-  if (ATTACK_SPEED <= 0.2 || abilityPoints >= 3) {
+  if (ATTACK_SPEED <= 0.1 || abilityPoints >= 3) {
     return;
   } else {
     let attackSpeedStat = document.querySelector("#attack-speed");
@@ -437,7 +437,7 @@ function decreaseBomb() {
 //
 //ENEMY STATS
 let GOBLIN_SPEED = 160;
-let GOBLIN_HEALTH = 5;
+let GOBLIN_HEALTH = 4.5;
 let GOBLIN_DAMAGE = 0.6;
 let SPAWN_RATE = 0.48;
 let GOBLIN_REACTION = 0.25;
@@ -465,17 +465,17 @@ scene("game", (scoreNumber) => {
     GOBLIN_SPEED = GOBLIN_SPEED + 100;
   }
   if (roundNumber === 2) {
-    GOBLIN_SPEED = GOBLIN_SPEED - 50;
+    GOBLIN_SPEED = GOBLIN_SPEED - 60;
   }
   if (roundNumber === 3) {
-    GOBLIN_SPEED = GOBLIN_SPEED - 40;
+    GOBLIN_SPEED = GOBLIN_SPEED - 30;
   }
   if (roundNumber < 10) {
-    GOBLIN_SPEED = GOBLIN_SPEED + 14;
+    GOBLIN_SPEED = GOBLIN_SPEED + 12;
   } else {
     GOBLIN_SPEED = GOBLIN_SPEED - 5;
   }
-  GOBLIN_HEALTH = GOBLIN_HEALTH * 1.2;
+  GOBLIN_HEALTH = GOBLIN_HEALTH * 1.3;
   GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.4;
   SPAWN_RATE = SPAWN_RATE - 0.007;
   // BIGGER_GOBLIN_SPEED = BIGGER_GOBLIN_SPEED + 6;
