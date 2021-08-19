@@ -30,6 +30,8 @@ This is a top-down survival horde mode fighting game where you play as a warrior
 
 ## Installation
 
+Game is available at https://immortal-kombat.herokuapp.com/
+
 To play the game simply signup or login and press spacebar.
 
 ## Usage
