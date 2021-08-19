@@ -180,10 +180,11 @@ let roundNumber = 1;
 // WARRIOR STATS
 let WARRIOR_HEALTH = 10;
 let ATTACK_DAMAGE = 6;
-let ATTACK_SPEED = 1;
+let ATTACK_SPEED = 0.7;
 let ATTACK_RANGE = 200;
-let WARRIOR_SPEED = 160;
-let DASH_DISTANCE = 4;
+let ATTACK_WIDTH = 0.24;
+let WARRIOR_SPEED = 150;
+let DASH_DISTANCE = 3;
 let DASH_COOLDOWN = 2.5;
 let BOMB_COUNT = 1;
 let MAX_BOMBS = 1;
@@ -193,10 +194,11 @@ let BOMB_STAT = 1;
 function resetStats() {
   WARRIOR_HEALTH = 10;
   ATTACK_DAMAGE = 6;
-  ATTACK_SPEED = 1;
+  ATTACK_SPEED = 0.7;
   ATTACK_RANGE = 200;
-  WARRIOR_SPEED = 160;
-  DASH_DISTANCE = 4;
+  ATTACK_WIDTH = 0.24;
+  WARRIOR_SPEED = 150;
+  DASH_DISTANCE = 3;
   DASH_COOLDOWN = 2.5;
   BOMB_COUNT = 1;
   MAX_BOMBS = 1;
@@ -213,10 +215,10 @@ function resetStats() {
   roundNumber = 1;
   GOBLIN_SPEED = 170;
   GOBLIN_HEALTH = 3;
-  GOBLIN_DAMAGE = 0.2;
-  SPAWN_RATE = 0.5;
-  GOBLIN_REACTION = 0.2;
-  enemyCount = 19;
+  GOBLIN_DAMAGE = 0.6;
+  SPAWN_RATE = 0.48;
+  GOBLIN_REACTION = 0.25;
+  enemyCount = 9;
   scoreNumber = 0;
   renderAbilities(healthPoints, "he");
   renderAbilities(damagePoints, "d");
@@ -270,7 +272,7 @@ function increaseDamage() {
   }
 }
 function decreaseDamage() {
-  if (ATTACK_DAMAGE <= 5 || abilityPoints <= 0) {
+  if (ATTACK_DAMAGE <= 6 || abilityPoints <= 0) {
     return;
   } else {
     let damageStat = document.querySelector("#attack-damage");
@@ -285,11 +287,11 @@ function decreaseDamage() {
 
 //ATTACK SPEED INCREASES
 function increaseAttackSpeed() {
-  if (ATTACK_SPEED <= 0.17 || abilityPoints >= 3) {
+  if (ATTACK_SPEED <= 0.2 || abilityPoints >= 3) {
     return;
   } else {
     let attackSpeedStat = document.querySelector("#attack-speed");
-    ATTACK_SPEED = ATTACK_SPEED - 0.07;
+    ATTACK_SPEED = ATTACK_SPEED - 0.05;
     attackSpeedStat.innerHTML = ` ${Math.round(ATTACK_SPEED * 100) / 100}`;
     abilityPoints++;
     speedPoints++;
@@ -298,11 +300,11 @@ function increaseAttackSpeed() {
   }
 }
 function decreaseAttackSpeed() {
-  if (ATTACK_SPEED >= 1 || abilityPoints <= 0) {
+  if (ATTACK_SPEED >= 0.7 || abilityPoints <= 0) {
     return;
   } else {
     let attackSpeedStat = document.querySelector("#attack-speed");
-    ATTACK_SPEED = ATTACK_SPEED + 0.07;
+    ATTACK_SPEED = ATTACK_SPEED + 0.05;
     attackSpeedStat.innerHTML = ` ${Math.round(ATTACK_SPEED * 100) / 100}`;
     abilityPoints--;
     speedPoints--;
@@ -313,11 +315,12 @@ function decreaseAttackSpeed() {
 
 //ATTACK RANGE INCREASES
 function increaseAttackRange() {
-  if (ATTACK_RANGE >= 2500 || abilityPoints >= 3) {
+  if (ATTACK_RANGE >= 1400 || abilityPoints >= 3) {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
-    ATTACK_RANGE = ATTACK_RANGE * 1.25;
+    ATTACK_RANGE = ATTACK_RANGE * 1.18;
+    ATTACK_WIDTH = ATTACK_WIDTH + 0.02;
     attackRangeStat.innerHTML = ` ${Math.round(ATTACK_RANGE * 10) / 10}`;
     abilityPoints++;
     rangePoints++;
@@ -330,7 +333,8 @@ function decreaseAttackRange() {
     return;
   } else {
     let attackRangeStat = document.querySelector("#attack-range");
-    ATTACK_RANGE = ATTACK_RANGE / 1.25;
+    ATTACK_RANGE = ATTACK_RANGE / 1.18;
+    ATTACK_WIDTH = ATTACK_WIDTH - 0.02;
     attackRangeStat.innerHTML = ` ${Math.round(ATTACK_RANGE * 10) / 10}`;
     abilityPoints--;
     rangePoints--;
@@ -346,7 +350,7 @@ function increaseWarriorSpeed() {
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
     WARRIOR_SPEED = WARRIOR_SPEED + 20;
-    movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
+    movementSpeedStat.innerHTML = ` ${Math.round(WARRIOR_SPEED)}`;
     DASH_DISTANCE = DASH_DISTANCE + 0.05;
     DASH_COOLDOWN = DASH_COOLDOWN - 0.2;
     abilityPoints++;
@@ -361,7 +365,7 @@ function decreaseWarriorSpeed() {
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
     WARRIOR_SPEED = WARRIOR_SPEED - 20;
-    movementSpeedStat.innerHTML = ` ${WARRIOR_SPEED}`;
+    movementSpeedStat.innerHTML = ` ${Math.round(WARRIOR_SPEED)}`;
     DASH_DISTANCE = DASH_DISTANCE - 0.05;
     DASH_COOLDOWN = DASH_COOLDOWN + 0.2;
     abilityPoints--;
@@ -432,11 +436,11 @@ function decreaseBomb() {
 //
 //
 //ENEMY STATS
-let GOBLIN_SPEED = 170;
-let GOBLIN_HEALTH = 3;
-let GOBLIN_DAMAGE = 0.2;
-let SPAWN_RATE = 0.5;
-let GOBLIN_REACTION = 0.2;
+let GOBLIN_SPEED = 160;
+let GOBLIN_HEALTH = 5;
+let GOBLIN_DAMAGE = 0.6;
+let SPAWN_RATE = 0.48;
+let GOBLIN_REACTION = 0.25;
 
 // let BIGGER_GOBLIN_SPEED = 100;
 // let BIGGER_GOBLIN_HEALTH = 5;
@@ -449,17 +453,30 @@ let GOBLIN_REACTION = 0.2;
 //
 // GENERAL
 
-let enemyCount = 19;
+let enemyCount = 9;
 
 function increaseEnemies() {
-  enemyCount = Math.round(enemyCount * 1.05);
+  enemyCount = enemyCount + 5;
   roundNumber++;
 }
 
 scene("game", (scoreNumber) => {
-  GOBLIN_SPEED = GOBLIN_SPEED + 14;
-  GOBLIN_HEALTH = GOBLIN_HEALTH * 1.45;
-  GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.8;
+  if (roundNumber === 1) {
+    GOBLIN_SPEED = GOBLIN_SPEED + 100;
+  }
+  if (roundNumber === 2) {
+    GOBLIN_SPEED = GOBLIN_SPEED - 50;
+  }
+  if (roundNumber === 3) {
+    GOBLIN_SPEED = GOBLIN_SPEED - 40;
+  }
+  if (roundNumber < 10) {
+    GOBLIN_SPEED = GOBLIN_SPEED + 14;
+  } else {
+    GOBLIN_SPEED = GOBLIN_SPEED - 5;
+  }
+  GOBLIN_HEALTH = GOBLIN_HEALTH * 1.2;
+  GOBLIN_DAMAGE = GOBLIN_DAMAGE + 0.4;
   SPAWN_RATE = SPAWN_RATE - 0.007;
   // BIGGER_GOBLIN_SPEED = BIGGER_GOBLIN_SPEED + 6;
   // BIGGER_GOBLIN_HEALTH = BIGGER_GOBLIN_HEALTH * 1.4;
@@ -532,22 +549,23 @@ scene("game", (scoreNumber) => {
     scale(3),
   ]);
   if (MAX_BOMBS > BOMB_COUNT) {
-    BOMB_COUNT++;
-    if (BOMB_STAT < 5) {
+    if (BOMB_STAT < 10) {
       let extraBomb = add([
         text("+1 bomb!"),
-        pos(width() - 580, 100),
+        pos(width() - 600, 100),
         scale(2),
       ]);
       wait(2, () => {
         destroy(extraBomb);
       });
     }
-    if (BOMB_STAT >= 5) {
+    BOMB_COUNT++;
+
+    if (BOMB_STAT >= 10) {
       BOMB_COUNT++;
       let extraBomb = add([
         text("+2 bombs!"),
-        pos(width() - 580, 100),
+        pos(width() - 600, 100),
         scale(2),
       ]);
       wait(2, () => {
@@ -730,7 +748,7 @@ scene("game", (scoreNumber) => {
           if (dashIsNotCooldown) {
             WARRIOR_SPEED = WARRIOR_SPEED * DASH_DISTANCE;
             dashIsNotCooldown = false;
-            wait(0.07, () => {
+            wait(0.2, () => {
               WARRIOR_SPEED = WARRIOR_SPEED / DASH_DISTANCE;
               resetDashCooldown();
             });
@@ -783,14 +801,18 @@ scene("game", (scoreNumber) => {
           if (attackIsNotCooldown) {
             const attack = add([
               sprite("attack", { animSpeed: 0.05, frame: 0 }),
-              pos(warrior.pos.add(-25, -20)),
-              scale(0.3),
+              pos(warrior.pos.x - 20, warrior.pos.y - 20),
+              scale(ATTACK_WIDTH),
               layer("obj"),
               "attack",
               {
                 dir: mpos.sub(warriorLocation).unit(),
               },
             ]);
+            if (ATTACK_WIDTH >= 0.4) {
+              attack.pos.x = attack.pos.x - 40;
+              attack.pos.y = attack.pos.y - 40;
+            }
             attackIsNotCooldown = false;
             attack.play("attack");
             wait(0.4, () => {
@@ -951,6 +973,18 @@ scene("game", (scoreNumber) => {
         //WARRIOR HEALTH
         hitanim = 0.3;
         warrior.overlaps("goblin", () => {
+          const warriorhitMarker = add([
+            text(Math.round(GOBLIN_DAMAGE * 10) / 10),
+            pos(warrior.pos.x + 20, warrior.pos.y + 20),
+            color(20, 0, 0, 1),
+          ]);
+          warriorhitMarker.on("update", () => {
+            warriorhitMarker.move(rand(-30, 30), rand(-10, -40));
+          });
+          wait(2, () => {
+            destroy(warriorhitMarker);
+          });
+
           warrior.health = warrior.health - GOBLIN_DAMAGE;
           warrior.color = { r: 1, g: 0, b: 0, a: 1 };
           wait(hitanim, () => {

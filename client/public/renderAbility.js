@@ -321,8 +321,8 @@ function renderAbilities(points, id) {
     document.getElementById(`${id}8`).src = abilityPoint;
     document.getElementById(`${id}9`).src = abilityPoint;
     document.getElementById(`${id}10`).src = abilityPoint;
-    document.getElementById(`${id}11`).src = abilityPoint;
-    document.getElementById(`${id}12`).src = abilityPoint;
+    document.getElementById(`${id}11`).src = noAbilityPoint;
+    document.getElementById(`${id}12`).src = noAbilityPoint;
   }
   if (points === 23) {
     document.getElementById(`${id}1`).src = abilityPoint;
@@ -336,7 +336,7 @@ function renderAbilities(points, id) {
     document.getElementById(`${id}9`).src = abilityPoint;
     document.getElementById(`${id}10`).src = abilityPoint;
     document.getElementById(`${id}11`).src = abilityPoint;
-    document.getElementById(`${id}12`).src = abilityPoint;
+    document.getElementById(`${id}12`).src = noAbilityPoint;
   }
   if (points === 24) {
     document.getElementById(`${id}1`).src = abilityPoint;

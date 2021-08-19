@@ -464,3 +464,9 @@ input:focus {
   color: rgb(201, 46, 46);
   z-index: 1;
 }
+
+.roundnum {
+  position: relative;
+  top: -20px;
+  font-size: 2rem;
+}

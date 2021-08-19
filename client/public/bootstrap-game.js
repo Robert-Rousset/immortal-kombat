@@ -23,7 +23,7 @@ function endRound(
   damageStat.innerHTML = ` ${Math.round(attackDamage * 10) / 10}`;
   attackSpeedStat.innerHTML = ` ${Math.round(attackSpeed * 100) / 100}`;
   attackRangeStat.innerHTML = ` ${Math.round(attackRange * 10) / 10}`;
-  movementSpeedStat.innerHTML = ` ${movementSpeed}`;
+  movementSpeedStat.innerHTML = ` ${Math.round(movementSpeed)}`;
   bombStat.innerHTML = ` ${Math.round(bomb * 10) / 10}`;
   scoreStat.innerHTML = ` ${score}`;
   roundStat.innerHTML = ` ${round}`;

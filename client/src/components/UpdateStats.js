@@ -19,9 +19,36 @@ export default function UpdateStats() {
           Score:<span id="score">0</span>
         </h5>
         <h2>WARRIOR STATS</h2>{" "}
-        <h5>
+        <h5 className="roundnum">
           Round: <span id="round">0</span>
         </h5>
+        <h5>Spend up to 3 ability points</h5>
+        <div className="ability-point-box">
+          <img
+            id="ab1"
+            src={abilityPoint}
+            alt="ability point"
+            className="ability-point"
+          ></img>
+          <img
+            id="ab2"
+            src={abilityPoint}
+            alt="ability point"
+            className="ability-point"
+          ></img>
+          <img
+            id="ab3"
+            src={abilityPoint}
+            alt="ability point"
+            className="ability-point"
+          ></img>
+          {/* <img
+            id="ab4"
+            src={abilityPoint}
+            alt="ability point"
+            className="ability-point"
+          ></img> */}
+        </div>
         <article className="container">
           <section className="column">
             <div className="each-stat-container">
@@ -631,33 +658,6 @@ export default function UpdateStats() {
             </div>
           </section>
         </article>
-        <h5>Spend up to 3 ability points</h5>
-        <div className="ability-point-box">
-          <img
-            id="ab1"
-            src={abilityPoint}
-            alt="ability point"
-            className="ability-point"
-          ></img>
-          <img
-            id="ab2"
-            src={abilityPoint}
-            alt="ability point"
-            className="ability-point"
-          ></img>
-          <img
-            id="ab3"
-            src={abilityPoint}
-            alt="ability point"
-            className="ability-point"
-          ></img>
-          {/* <img
-            id="ab4"
-            src={abilityPoint}
-            alt="ability point"
-            className="ability-point"
-          ></img> */}
-        </div>
         <div className="button-box">
           <button className="button next-round" onClick={nextRound}>
             Next Round
