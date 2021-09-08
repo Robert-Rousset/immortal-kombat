@@ -345,7 +345,7 @@ function decreaseAttackRange() {
 
 // INCREASE WARRIOR SPEED
 function increaseWarriorSpeed() {
-  if (WARRIOR_SPEED >= 440 || abilityPoints >= 3) {
+  if (WARRIOR_SPEED >= 390 || abilityPoints >= 3) {
     return;
   } else {
     let movementSpeedStat = document.querySelector("#movement-speed");
